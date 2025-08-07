@@ -38,9 +38,9 @@ export default function Sidebar() {
             {navigation.map((item) => (
               <li key={item.name}>
                 <Link href={item.href}>
-                  <a
+                  <div
                     className={cn(
-                      "flex items-center space-x-3 px-3 py-2 rounded-lg font-medium transition-colors",
+                      "flex items-center space-x-3 px-3 py-2 rounded-lg font-medium transition-colors cursor-pointer",
                       item.current
                         ? "bg-primary text-white"
                         : "text-neutral-600 hover:bg-neutral-100"
@@ -63,7 +63,7 @@ export default function Sidebar() {
                         {item.count}
                       </Badge>
                     )}
-                  </a>
+                  </div>
                 </Link>
               </li>
             ))}
