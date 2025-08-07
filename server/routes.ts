@@ -210,6 +210,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.get('/api/analytics/network-health', async (req: any, res) => {
+    try {
+      const healthData = await storage.getNetworkHealthMetrics(req.userId);
+      res.json(healthData);
+    } catch (error) {
+      console.error('Error fetching network health:', error);
+      res.status(500).json({ message: 'Failed to fetch network health' });
+    }
+  });
+
   app.get('/api/network/graph', async (req: any, res) => {
     try {
       const graphData = await storage.getNetworkGraphData(req.userId);

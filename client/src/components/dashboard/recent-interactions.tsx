@@ -73,10 +73,8 @@ export default function RecentInteractions() {
     <Card>
       <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle>Recent Interactions</CardTitle>
-        <Link href="/interactions">
-          <a className="text-primary text-sm hover:underline" data-testid="link-view-all-interactions">
-            View all
-          </a>
+        <Link href="/interactions" className="text-primary text-sm hover:underline" data-testid="link-view-all-interactions">
+          View all
         </Link>
       </CardHeader>
       <CardContent>

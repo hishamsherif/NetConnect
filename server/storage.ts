@@ -59,6 +59,36 @@ export interface IStorage {
     dormantContacts: number;
   }>;
 
+  getNetworkHealthMetrics(userId: string): Promise<{
+    overallScore: number;
+    connectionStrength: {
+      strong: number;
+      medium: number;
+      weak: number;
+    };
+    communicationHealth: {
+      active: number;
+      declining: number;
+      dormant: number;
+    };
+    networkGrowth: {
+      thisMonth: number;
+      lastMonth: number;
+      trend: 'up' | 'down' | 'stable';
+    };
+    responseRates: {
+      average: number;
+      recent: number;
+    };
+    atRiskRelationships: Array<{
+      id: string;
+      name: string;
+      company: string;
+      lastContact: string;
+      riskLevel: 'high' | 'medium' | 'low';
+    }>;
+  }>;
+
   getNetworkGraphData(userId: string): Promise<{
     nodes: Array<{ id: string; name: string; category: string; strength: number; company?: string }>;
     links: Array<{ source: string; target: string; type: string; strength: number }>;
@@ -330,6 +360,101 @@ export class DatabaseStorage implements IStorage {
       strongConnections: strongConnectionsResult.count,
       recentInteractions: recentInteractionsResult.count,
       dormantContacts: dormantCount,
+    };
+  }
+
+  async getNetworkHealthMetrics(userId: string): Promise<{
+    overallScore: number;
+    connectionStrength: { strong: number; medium: number; weak: number; };
+    communicationHealth: { active: number; declining: number; dormant: number; };
+    networkGrowth: { thisMonth: number; lastMonth: number; trend: 'up' | 'down' | 'stable'; };
+    responseRates: { average: number; recent: number; };
+    atRiskRelationships: Array<{ id: string; name: string; company: string; lastContact: string; riskLevel: 'high' | 'medium' | 'low'; }>;
+  }> {
+    // Connection strength distribution
+    const [strongConnections] = await db.select({ count: count() }).from(contacts)
+      .where(and(eq(contacts.userId, userId), sql`${contacts.relationshipStrength} >= 4`));
+    
+    const [mediumConnections] = await db.select({ count: count() }).from(contacts)
+      .where(and(eq(contacts.userId, userId), sql`${contacts.relationshipStrength} = 3`));
+    
+    const [weakConnections] = await db.select({ count: count() }).from(contacts)
+      .where(and(eq(contacts.userId, userId), sql`${contacts.relationshipStrength} <= 2`));
+
+    // Communication health
+    const [activeContacts] = await db.select({ count: count() }).from(contacts)
+      .innerJoin(interactions, eq(contacts.id, interactions.contactId))
+      .where(and(
+        eq(contacts.userId, userId),
+        sql`${interactions.createdAt} >= NOW() - INTERVAL '30 days'`
+      ));
+
+    const [decliningContacts] = await db.select({ count: count() }).from(contacts)
+      .innerJoin(interactions, eq(contacts.id, interactions.contactId))
+      .where(and(
+        eq(contacts.userId, userId),
+        sql`${interactions.createdAt} >= NOW() - INTERVAL '90 days'`,
+        sql`${interactions.createdAt} < NOW() - INTERVAL '30 days'`
+      ));
+
+    const totalContacts = strongConnections.count + mediumConnections.count + weakConnections.count;
+    const dormantContacts = totalContacts - activeContacts.count - decliningContacts.count;
+
+    // Network growth (simplified calculation)
+    const thisMonth = Math.floor(totalContacts * 0.1); // Mock 10% growth
+    const lastMonth = Math.floor(totalContacts * 0.08); // Mock 8% previous growth
+    const trend: 'up' | 'down' | 'stable' = thisMonth > lastMonth ? 'up' : thisMonth < lastMonth ? 'down' : 'stable';
+
+    // At-risk relationships (contacts not contacted in 60+ days)
+    const atRiskContacts = await db.select({
+      id: contacts.id,
+      firstName: contacts.firstName,
+      lastName: contacts.lastName,
+      company: contacts.company,
+    }).from(contacts)
+      .leftJoin(interactions, eq(contacts.id, interactions.contactId))
+      .where(and(
+        eq(contacts.userId, userId),
+        sql`${contacts.relationshipStrength} >= 3`, // Only important contacts
+        sql`(${interactions.createdAt} IS NULL OR ${interactions.createdAt} < NOW() - INTERVAL '60 days')`
+      ))
+      .limit(10);
+
+    const atRiskRelationships = atRiskContacts.map(contact => ({
+      id: contact.id,
+      name: `${contact.firstName} ${contact.lastName}`,
+      company: contact.company || 'Unknown',
+      lastContact: '60+ days ago',
+      riskLevel: 'high' as const,
+    }));
+
+    // Calculate overall score
+    const strengthScore = (strongConnections.count * 5 + mediumConnections.count * 3 + weakConnections.count * 1) / (totalContacts || 1);
+    const activityScore = (activeContacts.count / (totalContacts || 1)) * 100;
+    const overallScore = Math.min(100, Math.round((strengthScore * 20) + (activityScore * 0.6)));
+
+    return {
+      overallScore,
+      connectionStrength: {
+        strong: strongConnections.count,
+        medium: mediumConnections.count,
+        weak: weakConnections.count,
+      },
+      communicationHealth: {
+        active: activeContacts.count,
+        declining: decliningContacts.count,
+        dormant: Math.max(0, dormantContacts),
+      },
+      networkGrowth: {
+        thisMonth,
+        lastMonth,
+        trend,
+      },
+      responseRates: {
+        average: 85, // Mock data
+        recent: 92,  // Mock data
+      },
+      atRiskRelationships,
     };
   }
 

@@ -7,6 +7,7 @@ import NotFound from "@/pages/not-found";
 import Dashboard from "@/pages/dashboard";
 import Contacts from "@/pages/contacts";
 import NetworkMap from "@/pages/network-map";
+import Analytics from "@/pages/analytics";
 import Layout from "@/components/layout/layout";
 
 function Router() {
@@ -16,6 +17,7 @@ function Router() {
         <Route path="/" component={Dashboard} />
         <Route path="/contacts" component={Contacts} />
         <Route path="/network" component={NetworkMap} />
+        <Route path="/analytics" component={Analytics} />
         <Route component={NotFound} />
       </Switch>
     </Layout>
