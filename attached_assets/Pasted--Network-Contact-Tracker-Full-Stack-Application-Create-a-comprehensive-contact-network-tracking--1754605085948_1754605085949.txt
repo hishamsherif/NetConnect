@@ -1,0 +1,140 @@
+# Network Contact Tracker - Full Stack Application
+
+Create a comprehensive contact network tracking application using Node.js, Express, and React with the following specifications:
+
+## Core Features
+
+### Contact Management
+
+- **Contact Creation**: Full contact profiles with name, email, phone, company, title, location, social media links
+- **Contact Categories**: Tag contacts (family, work, clients, prospects, mentors, etc.)
+- **Interaction Logging**: Track meetings, calls, emails, events with timestamps and notes
+- **Relationship Strength**: Rate relationships (1-5 scale) and track relationship evolution over time
+- **Contact Source**: How you met them (conference, referral, LinkedIn, etc.)
+
+### Network Visualization
+
+- **Interactive Network Graph**: Use D3.js or Vis.js to create a dynamic network map
+- **Connection Mapping**: Show how contacts are connected to each other
+- **Relationship Types**: Different edge types (introduced by, works with, family, etc.)
+- **Visual Clustering**: Group contacts by company, industry, location, or custom tags
+- **Node Sizing**: Size nodes by relationship strength or interaction frequency
+- **Search & Filter**: Filter the graph by tags, companies, relationship strength, last contact date
+
+### Analytics Dashboard
+
+- **Network Statistics**: Total contacts, strongest connections, interaction frequency
+- **Relationship Insights**: Who introduces you to the most people, network growth over time
+- **Interaction Trends**: Communication patterns, response rates, meeting frequency
+- **Network Health**: Identify dormant relationships that need attention
+- **Influence Mapping**: Identify key connectors and influencers in your network
+
+## Technical Stack
+
+### Backend (Node.js + Express)
+
+- **Database**: Use PostgreSQL with proper normalization for contacts, interactions, and relationships
+- **Authentication**: JWT-based auth system with secure session management
+- **API Design**: RESTful endpoints for CRUD operations on contacts, interactions, and relationships
+- **Data Models**:
+  - Contacts table with comprehensive profile fields
+  - Interactions table for tracking all communications
+  - Relationships table for mapping connections between contacts
+  - Tags/Categories tables for organization
+
+### Frontend (React)
+
+- **Responsive Design**: Mobile-first design with clean, professional UI
+- **Dashboard**: Overview with key metrics and recent interactions
+- **Contact List**: Searchable, filterable table with sorting capabilities
+- **Contact Detail**: Comprehensive contact view with interaction history
+- **Network Visualization**: Interactive graph component with zoom, pan, and selection
+- **Forms**: Intuitive forms for adding contacts and logging interactions
+- **Dark/Light Mode**: Toggle between themes
+
+## Advanced Features
+
+### Smart Suggestions
+
+- **Connection Recommendations**: Suggest potential introductions based on mutual interests/industries
+- **Follow-up Reminders**: Intelligent reminders based on interaction patterns
+- **Duplicate Detection**: Identify and merge potential duplicate contacts
+- **Import Functionality**: Import from LinkedIn, Google Contacts, CSV files
+
+### Collaboration Features
+
+- **Shared Networks**: Allow team members to share and collaborate on contact networks
+- **Introduction Tracking**: Track warm introductions made and received
+- **Team Analytics**: Aggregate network insights for teams or organizations
+
+### Data Export & Backup
+
+- **Export Options**: CSV, JSON, or PDF reports of network data
+- **Data Backup**: Automated backup system with restore capabilities
+- **Privacy Controls**: Granular privacy settings for different contact types
+
+## Implementation Requirements
+
+### Database Schema
+
+```sql
+-- Contacts table with comprehensive fields
+-- Interactions table with type, date, notes, outcome
+-- Relationships table for contact-to-contact connections
+-- Tags table for categorization
+-- Users table for authentication
+```
+
+### API Endpoints
+
+- Authentication routes (/auth/*)
+- Contact CRUD (/api/contacts/*)
+- Interaction logging (/api/interactions/*)
+- Relationship mapping (/api/relationships/*)
+- Analytics data (/api/analytics/*)
+- Network graph data (/api/network/graph)
+
+### Security & Performance
+
+- Input validation and sanitization
+- Rate limiting on API endpoints
+- Database indexing for fast queries
+- Caching for network graph data
+- HTTPS enforcement
+- CORS configuration
+
+### UI/UX Requirements
+
+- Clean, modern interface inspired by CRM tools like HubSpot or Salesforce
+- Intuitive navigation with breadcrumbs
+- Bulk actions for contact management
+- Advanced search with filters
+- Responsive tables with pagination
+- Loading states and error handling
+- Toast notifications for user feedback
+
+## File Structure
+
+```
+/
+├── server/
+│   ├── models/
+│   ├── routes/
+│   ├── middleware/
+│   ├── config/
+│   └── app.js
+├── client/
+│   ├── src/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   ├── hooks/
+│   │   ├── utils/
+│   │   └── App.js
+├── database/
+│   └── migrations/
+└── README.md
+```
+
+Start with the basic contact CRUD functionality, then add the network visualization, and finally implement the advanced analytics features. Focus on creating a clean, professional interface that makes network management intuitive and powerful.
+
+Use modern React patterns (hooks, context API), implement proper error boundaries, and ensure the application is fully responsive. The network graph should be the centerpiece - make it interactive, beautiful, and informative.
