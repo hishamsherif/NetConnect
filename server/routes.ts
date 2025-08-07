@@ -4,9 +4,17 @@ import { storage } from "./storage";
 import { insertContactSchema, insertInteractionSchema, insertRelationshipSchema } from "@shared/schema";
 import { z } from "zod";
 
-const authenticateUser = (req: any, res: any, next: any) => {
+const authenticateUser = async (req: any, res: any, next: any) => {
   // Simple user simulation - in production, implement proper JWT auth
-  req.userId = "user-1"; // Mock user ID
+  try {
+    // Get the first user from database
+    const { db } = await import("./db");
+    const { users } = await import("@shared/schema");
+    const [user] = await db.select().from(users).limit(1);
+    req.userId = user?.id || "user-1"; // Fallback to mock user ID
+  } catch (error) {
+    req.userId = "user-1"; // Fallback on error
+  }
   next();
 };
 
