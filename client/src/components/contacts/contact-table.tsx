@@ -15,6 +15,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Eye, Edit, Plus, Star, Search, Filter, Download } from "lucide-react";
 import { useContacts } from "@/hooks/use-contacts";
+import MobileContactCard from "./mobile-contact-card";
 import type { ContactWithRelations } from "@shared/schema";
 import { formatDistanceToNow } from "date-fns";
 
@@ -90,7 +91,7 @@ export default function ContactTable({ onContactSelect }: ContactTableProps) {
       return "Never";
     }
     const lastInteraction = contact.interactions[0]; // Assuming sorted by date
-    return formatDistanceToNow(new Date(lastInteraction.createdAt), { addSuffix: true });
+    return formatDistanceToNow(new Date(lastInteraction.createdAt || new Date()), { addSuffix: true });
   };
 
   if (isLoading) {
@@ -105,11 +106,11 @@ export default function ContactTable({ onContactSelect }: ContactTableProps) {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-6">
       {/* Filters and Search */}
-      <div className="bg-white rounded-xl border border-neutral-200 p-6">
-        <div className="flex flex-wrap items-center gap-4">
-          <div className="flex-1 min-w-64">
+      <div className="bg-white rounded-xl border border-neutral-200 p-4 lg:p-6">
+        <div className="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-3 sm:gap-4">
+          <div className="flex-1 min-w-0">
             <div className="relative">
               <Search className="absolute left-3 top-3 h-4 w-4 text-neutral-400" />
               <Input
@@ -123,7 +124,7 @@ export default function ContactTable({ onContactSelect }: ContactTableProps) {
           </div>
           
           <Select value={categoryFilter} onValueChange={setCategoryFilter}>
-            <SelectTrigger className="w-48" data-testid="select-filter-category">
+            <SelectTrigger className="w-full sm:w-48" data-testid="select-filter-category">
               <SelectValue placeholder="All Categories" />
             </SelectTrigger>
             <SelectContent>
@@ -138,7 +139,7 @@ export default function ContactTable({ onContactSelect }: ContactTableProps) {
           </Select>
           
           <Select value={strengthFilter} onValueChange={setStrengthFilter}>
-            <SelectTrigger className="w-48" data-testid="select-filter-strength">
+            <SelectTrigger className="w-full sm:w-48" data-testid="select-filter-strength">
               <SelectValue placeholder="All Strengths" />
             </SelectTrigger>
             <SelectContent>
@@ -156,8 +157,28 @@ export default function ContactTable({ onContactSelect }: ContactTableProps) {
         </div>
       </div>
 
-      {/* Contacts Table */}
-      <div className="bg-white rounded-xl border border-neutral-200 overflow-hidden">
+      {/* Mobile View */}
+      <div className="block lg:hidden">
+        <div className="space-y-3">
+          {filteredContacts.map((contact) => (
+            <MobileContactCard
+              key={contact.id}
+              contact={contact}
+              onEdit={(contact) => onContactSelect?.(contact)}
+              onDelete={(contact) => console.log('Delete', contact.id)}
+              onInteract={(contact) => console.log('Interact', contact.id)}
+            />
+          ))}
+          {filteredContacts.length === 0 && (
+            <div className="text-center py-12 text-neutral-500">
+              <p>No contacts found matching your filters.</p>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Desktop Table View */}
+      <div className="hidden lg:block bg-white rounded-xl border border-neutral-200 overflow-hidden">
         <div className="overflow-x-auto">
           <Table>
             <TableHeader>

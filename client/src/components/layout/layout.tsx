@@ -11,8 +11,12 @@ export default function Layout({ children }: LayoutProps) {
     <div className="bg-neutral-50 min-h-screen">
       <TopNav />
       <div className="flex">
-        <Sidebar />
-        <main className="flex-1 p-8">
+        {/* Desktop Sidebar */}
+        <div className="hidden lg:block">
+          <Sidebar />
+        </div>
+        
+        <main className="flex-1 p-4 lg:p-8">
           {children}
         </main>
       </div>

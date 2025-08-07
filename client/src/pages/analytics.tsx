@@ -18,31 +18,31 @@ export default function Analytics() {
 
   if (statsLoading || !stats) {
     return (
-      <div className="container mx-auto p-6 space-y-6">
+      <div className="container mx-auto p-4 lg:p-6 space-y-4 lg:space-y-6">
         <div className="flex items-center justify-between">
-          <h1 className="text-3xl font-bold">Network Analytics</h1>
+          <h1 className="text-2xl lg:text-3xl font-bold">Network Analytics</h1>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4">
           {[1, 2, 3, 4].map((i) => (
             <Card key={i}>
-              <CardContent className="p-6">
+              <CardContent className="p-4 lg:p-6">
                 <div className="animate-pulse">
-                  <div className="h-4 bg-muted rounded mb-2"></div>
-                  <div className="h-8 bg-muted rounded"></div>
+                  <div className="h-3 lg:h-4 bg-muted rounded mb-2"></div>
+                  <div className="h-6 lg:h-8 bg-muted rounded"></div>
                 </div>
               </CardContent>
             </Card>
           ))}
         </div>
         
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
           <Card>
-            <CardContent className="p-6">
-              <div className="animate-pulse space-y-4">
+            <CardContent className="p-4 lg:p-6">
+              <div className="animate-pulse space-y-3 lg:space-y-4">
                 {[1, 2, 3, 4].map((i) => (
                   <div key={i}>
-                    <div className="h-4 bg-muted rounded mb-2"></div>
+                    <div className="h-3 lg:h-4 bg-muted rounded mb-2"></div>
                     <div className="h-2 bg-muted rounded"></div>
                   </div>
                 ))}
@@ -50,10 +50,10 @@ export default function Analytics() {
             </CardContent>
           </Card>
           <Card>
-            <CardContent className="p-6">
-              <div className="animate-pulse space-y-4">
+            <CardContent className="p-4 lg:p-6">
+              <div className="animate-pulse space-y-3 lg:space-y-4">
                 {[1, 2, 3].map((i) => (
-                  <div key={i} className="h-16 bg-muted rounded"></div>
+                  <div key={i} className="h-12 lg:h-16 bg-muted rounded"></div>
                 ))}
               </div>
             </CardContent>
@@ -64,20 +64,20 @@ export default function Analytics() {
   }
 
   return (
-    <div className="container mx-auto p-6 space-y-6">
+    <div className="container mx-auto p-4 lg:p-6 space-y-4 lg:space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold">Network Analytics</h1>
+        <h1 className="text-2xl lg:text-3xl font-bold">Network Analytics</h1>
       </div>
 
       {/* Key Metrics */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4">
         <Card data-testid="card-total-contacts">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Contacts</CardTitle>
-            <Users className="h-4 w-4 text-muted-foreground" />
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-1 lg:pb-2">
+            <CardTitle className="text-xs lg:text-sm font-medium">Total Contacts</CardTitle>
+            <Users className="h-3 lg:h-4 w-3 lg:w-4 text-muted-foreground" />
           </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold" data-testid="text-total-contacts">
+          <CardContent className="p-3 lg:p-6 pt-0">
+            <div className="text-xl lg:text-2xl font-bold" data-testid="text-total-contacts">
               {stats.totalContacts}
             </div>
             <p className="text-xs text-muted-foreground">

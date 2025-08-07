@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Search, Bell } from "lucide-react";
+import { Search, Bell, Menu } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -11,26 +11,27 @@ export default function TopNav() {
   const { data: searchResults, isLoading } = useSearchContacts(searchQuery);
 
   return (
-    <nav className="bg-white border-b border-neutral-200 px-6 py-4 sticky top-0 z-40">
+    <nav className="bg-white border-b border-neutral-200 px-4 lg:px-6 py-4 sticky top-0 z-40">
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-4">
           <div className="flex items-center space-x-3">
             <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
               <i className="fas fa-network-wired text-white text-sm"></i>
             </div>
-            <h1 className="text-xl font-semibold text-neutral-800">NetworkTracker</h1>
+            <h1 className="text-lg lg:text-xl font-semibold text-neutral-800">NetworkTracker</h1>
           </div>
         </div>
         
-        <div className="flex items-center space-x-4">
-          <div className="relative">
+        <div className="flex items-center space-x-2 lg:space-x-4">
+          {/* Search - Hidden on small screens, shown on medium+ */}
+          <div className="relative hidden md:block">
             <Search className="absolute left-3 top-3 h-4 w-4 text-neutral-400" />
             <Input
               type="text"
               placeholder="Search contacts..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10 pr-4 py-2 w-80 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+              className="pl-10 pr-4 py-2 w-48 lg:w-80 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
               data-testid="input-search-contacts"
             />
             
@@ -58,18 +59,23 @@ export default function TopNav() {
               </div>
             )}
           </div>
+
+          {/* Mobile Search Button */}
+          <Button variant="ghost" size="icon" className="md:hidden" data-testid="button-mobile-search">
+            <Search className="h-5 w-5" />
+          </Button>
           
           <Button variant="ghost" size="icon" className="relative" data-testid="button-notifications">
             <Bell className="h-5 w-5" />
             <Badge className="absolute -top-1 -right-1 h-3 w-3 p-0 bg-accent"></Badge>
           </Button>
           
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center space-x-2 lg:space-x-3">
             <Avatar className="w-8 h-8">
               <AvatarImage src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&h=100" />
               <AvatarFallback>JS</AvatarFallback>
             </Avatar>
-            <span className="text-sm font-medium text-neutral-700">John Smith</span>
+            <span className="text-sm font-medium text-neutral-700 hidden sm:block">John Smith</span>
           </div>
         </div>
       </div>

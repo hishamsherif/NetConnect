@@ -14,9 +14,9 @@ export default function Dashboard() {
   return (
     <div>
       {/* Dashboard Header */}
-      <div className="mb-8">
-        <h2 className="text-2xl font-bold text-neutral-800 mb-2">Dashboard</h2>
-        <p className="text-neutral-600">Overview of your professional network and recent activity</p>
+      <div className="mb-6 lg:mb-8">
+        <h2 className="text-xl lg:text-2xl font-bold text-neutral-800 mb-2">Dashboard</h2>
+        <p className="text-sm lg:text-base text-neutral-600">Overview of your professional network and recent activity</p>
       </div>
 
       {/* Key Metrics Cards */}
@@ -25,14 +25,14 @@ export default function Dashboard() {
       </div>
 
       {/* Main Content Grid */}
-      <div className="grid grid-cols-1 xl:grid-cols-3 gap-8 mb-12">
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 lg:gap-8 mb-8 lg:mb-12">
         {/* Network Visualization */}
         <div className="xl:col-span-2">
           <NetworkVisualization />
         </div>
 
         {/* Recent Activity & Quick Actions */}
-        <div className="space-y-6">
+        <div className="space-y-4 lg:space-y-6">
           <RecentInteractions />
           
           {/* Upcoming Follow-ups */}
@@ -65,14 +65,15 @@ export default function Dashboard() {
       </div>
 
       {/* Action Bar */}
-      <div className="flex items-center justify-between mb-6">
-        <h3 className="text-xl font-semibold text-neutral-800">Quick Actions</h3>
-        <div className="flex items-center space-x-3">
-          <Button variant="outline" data-testid="button-export">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+        <h3 className="text-lg lg:text-xl font-semibold text-neutral-800">Quick Actions</h3>
+        <div className="flex items-center space-x-2 lg:space-x-3">
+          <Button variant="outline" size="sm" className="flex-1 sm:flex-initial" data-testid="button-export">
             <Download className="h-4 w-4 mr-2" />
-            Export Data
+            <span className="hidden sm:inline">Export Data</span>
+            <span className="sm:hidden">Export</span>
           </Button>
-          <Button onClick={() => setIsAddModalOpen(true)} data-testid="button-add-contact-dashboard">
+          <Button onClick={() => setIsAddModalOpen(true)} size="sm" className="flex-1 sm:flex-initial" data-testid="button-add-contact-dashboard">
             <Plus className="h-4 w-4 mr-2" />
             Add Contact
           </Button>

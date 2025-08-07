@@ -8,17 +8,17 @@ export default function MetricsCards() {
 
   if (isLoading || !stats) {
     return (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
         {Array.from({ length: 4 }, (_, i) => (
           <Card key={i} className="hover:shadow-md transition-shadow">
-            <CardContent className="p-6">
+            <CardContent className="p-4 lg:p-6">
               <div className="animate-pulse">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="w-12 h-12 bg-neutral-200 rounded-lg"></div>
-                  <div className="w-16 h-4 bg-neutral-200 rounded"></div>
+                <div className="flex items-center justify-between mb-3 lg:mb-4">
+                  <div className="w-8 lg:w-12 h-8 lg:h-12 bg-neutral-200 rounded-lg"></div>
+                  <div className="w-12 lg:w-16 h-3 lg:h-4 bg-neutral-200 rounded"></div>
                 </div>
-                <div className="w-16 h-8 bg-neutral-200 rounded mb-2"></div>
-                <div className="w-24 h-4 bg-neutral-200 rounded"></div>
+                <div className="w-12 lg:w-16 h-6 lg:h-8 bg-neutral-200 rounded mb-2"></div>
+                <div className="w-16 lg:w-24 h-3 lg:h-4 bg-neutral-200 rounded"></div>
               </div>
             </CardContent>
           </Card>
@@ -67,22 +67,22 @@ export default function MetricsCards() {
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
       {metrics.map((metric, index) => (
         <Card key={metric.title} className="hover:shadow-md transition-shadow" data-testid={`card-metric-${index}`}>
-          <CardContent className="p-6">
-            <div className="flex items-center justify-between mb-4">
-              <div className={`w-12 h-12 ${metric.bgColor} rounded-lg flex items-center justify-center`}>
-                <metric.icon className={`h-6 w-6 ${metric.iconColor}`} />
+          <CardContent className="p-4 lg:p-6">
+            <div className="flex items-center justify-between mb-3 lg:mb-4">
+              <div className={`w-8 lg:w-12 h-8 lg:h-12 ${metric.bgColor} rounded-lg flex items-center justify-center`}>
+                <metric.icon className={`h-4 lg:h-6 w-4 lg:w-6 ${metric.iconColor}`} />
               </div>
               <Badge variant="secondary" className={`text-xs ${metric.trendColor} font-medium`}>
                 {metric.trend}
               </Badge>
             </div>
-            <h3 className="text-2xl font-bold text-neutral-800 mb-1" data-testid={`text-metric-value-${index}`}>
+            <h3 className="text-xl lg:text-2xl font-bold text-neutral-800 mb-1" data-testid={`text-metric-value-${index}`}>
               {metric.value}
             </h3>
-            <p className="text-neutral-600 text-sm" data-testid={`text-metric-title-${index}`}>
+            <p className="text-neutral-600 text-xs lg:text-sm" data-testid={`text-metric-title-${index}`}>
               {metric.title}
             </p>
           </CardContent>
