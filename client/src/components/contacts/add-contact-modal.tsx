@@ -12,9 +12,7 @@ import { insertContactSchema } from "@shared/schema";
 import { useCreateContact } from "@/hooks/use-contacts";
 import { z } from "zod";
 
-const formSchema = insertContactSchema.extend({
-  userId: z.string().optional(),
-});
+const formSchema = insertContactSchema.omit({ userId: true });
 
 type FormData = z.infer<typeof formSchema>;
 
@@ -45,7 +43,10 @@ export default function AddContactModal({ open, onOpenChange }: AddContactModalP
   });
 
   const onSubmit = (data: FormData) => {
-    createContact.mutate(data, {
+    createContact.mutate({
+      ...data,
+      userId: "user-1", // Use default user ID
+    }, {
       onSuccess: () => {
         form.reset();
         onOpenChange(false);
@@ -101,7 +102,7 @@ export default function AddContactModal({ open, onOpenChange }: AddContactModalP
                   <FormItem>
                     <FormLabel>Email</FormLabel>
                     <FormControl>
-                      <Input type="email" {...field} data-testid="input-email" />
+                      <Input type="email" {...field} value={field.value || ""} data-testid="input-email" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -115,7 +116,7 @@ export default function AddContactModal({ open, onOpenChange }: AddContactModalP
                   <FormItem>
                     <FormLabel>Phone</FormLabel>
                     <FormControl>
-                      <Input type="tel" {...field} data-testid="input-phone" />
+                      <Input type="tel" {...field} value={field.value || ""} data-testid="input-phone" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -129,7 +130,7 @@ export default function AddContactModal({ open, onOpenChange }: AddContactModalP
                   <FormItem>
                     <FormLabel>Company</FormLabel>
                     <FormControl>
-                      <Input {...field} data-testid="input-company" />
+                      <Input {...field} value={field.value || ""} data-testid="input-company" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -143,7 +144,7 @@ export default function AddContactModal({ open, onOpenChange }: AddContactModalP
                   <FormItem>
                     <FormLabel>Job Title</FormLabel>
                     <FormControl>
-                      <Input {...field} data-testid="input-title" />
+                      <Input {...field} value={field.value || ""} data-testid="input-title" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -209,7 +210,7 @@ export default function AddContactModal({ open, onOpenChange }: AddContactModalP
                 <FormItem>
                   <FormLabel>Location</FormLabel>
                   <FormControl>
-                    <Input placeholder="City, Country" {...field} data-testid="input-location" />
+                    <Input placeholder="City, Country" {...field} value={field.value || ""} data-testid="input-location" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -224,7 +225,7 @@ export default function AddContactModal({ open, onOpenChange }: AddContactModalP
                   <FormItem>
                     <FormLabel>LinkedIn URL</FormLabel>
                     <FormControl>
-                      <Input placeholder="https://linkedin.com/in/..." {...field} data-testid="input-linkedin" />
+                      <Input placeholder="https://linkedin.com/in/..." {...field} value={field.value || ""} data-testid="input-linkedin" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -237,7 +238,7 @@ export default function AddContactModal({ open, onOpenChange }: AddContactModalP
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>How did you meet?</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <Select onValueChange={field.onChange} defaultValue={field.value || ""}>
                       <FormControl>
                         <SelectTrigger data-testid="select-source">
                           <SelectValue placeholder="Select source" />
@@ -269,6 +270,7 @@ export default function AddContactModal({ open, onOpenChange }: AddContactModalP
                       placeholder="Any additional notes about this contact..."
                       rows={3}
                       {...field}
+                      value={field.value || ""}
                       data-testid="textarea-notes"
                     />
                   </FormControl>

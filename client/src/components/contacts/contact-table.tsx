@@ -18,6 +18,7 @@ import { useContacts } from "@/hooks/use-contacts";
 import MobileContactCard from "./mobile-contact-card";
 import type { ContactWithRelations } from "@shared/schema";
 import { formatDistanceToNow } from "date-fns";
+import AddInteractionModal from "./add-interaction-modal";
 
 interface ContactTableProps {
   onContactSelect?: (contact: ContactWithRelations) => void;
@@ -29,6 +30,8 @@ export default function ContactTable({ onContactSelect }: ContactTableProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [categoryFilter, setCategoryFilter] = useState<string>("all");
   const [strengthFilter, setStrengthFilter] = useState<string>("all");
+  const [selectedContact, setSelectedContact] = useState<ContactWithRelations | null>(null);
+  const [showInteractionModal, setShowInteractionModal] = useState(false);
 
   const filteredContacts = contacts?.filter(contact => {
     const matchesSearch = !searchQuery || 
@@ -276,6 +279,10 @@ export default function ContactTable({ onContactSelect }: ContactTableProps) {
                       <Button
                         variant="ghost"
                         size="sm"
+                        onClick={() => {
+                          setSelectedContact(contact);
+                          setShowInteractionModal(true);
+                        }}
                         data-testid={`button-add-interaction-${contact.id}`}
                       >
                         <Plus className="h-4 w-4" />
@@ -306,6 +313,12 @@ export default function ContactTable({ onContactSelect }: ContactTableProps) {
           </div>
         </div>
       </div>
+      
+      <AddInteractionModal 
+        open={showInteractionModal}
+        onOpenChange={setShowInteractionModal}
+        contact={selectedContact}
+      />
     </div>
   );
 }

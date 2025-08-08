@@ -4,6 +4,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Building, Mail, Phone, MapPin, Star, MessageSquare, Edit, Trash2 } from "lucide-react";
 import type { ContactWithRelations } from "@shared/schema";
+import { useState } from "react";
+import AddInteractionModal from "./add-interaction-modal";
 
 interface MobileContactCardProps {
   contact: ContactWithRelations;
@@ -13,6 +15,7 @@ interface MobileContactCardProps {
 }
 
 export default function MobileContactCard({ contact, onEdit, onDelete, onInteract }: MobileContactCardProps) {
+  const [showInteractionModal, setShowInteractionModal] = useState(false);
   const initials = `${contact.firstName?.[0] || ''}${contact.lastName?.[0] || ''}`;
   const strengthColors = {
     1: 'bg-red-100 text-red-800',
@@ -106,7 +109,7 @@ export default function MobileContactCard({ contact, onEdit, onDelete, onInterac
                 <Button
                   size="sm"
                   variant="outline"
-                  onClick={() => onInteract?.(contact)}
+                  onClick={() => setShowInteractionModal(true)}
                   className="h-8 px-3 text-xs"
                   data-testid={`button-interact-${contact.id}`}
                 >
@@ -139,6 +142,12 @@ export default function MobileContactCard({ contact, onEdit, onDelete, onInterac
           </div>
         </div>
       </CardContent>
+      
+      <AddInteractionModal 
+        open={showInteractionModal}
+        onOpenChange={setShowInteractionModal}
+        contact={contact}
+      />
     </Card>
   );
 }

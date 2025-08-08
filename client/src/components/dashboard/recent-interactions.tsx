@@ -95,7 +95,7 @@ export default function RecentInteractions() {
                   {interaction.type} {interaction.subject && `• ${interaction.subject}`}
                 </p>
                 <p className="text-xs text-neutral-500" data-testid={`text-interaction-time-${interaction.id}`}>
-                  {formatDistanceToNow(new Date(interaction.createdAt), { addSuffix: true })}
+                  {formatDistanceToNow(new Date(interaction.createdAt || new Date()), { addSuffix: true })}
                 </p>
               </div>
               <div className={`w-2 h-2 rounded-full ${getInteractionColor(interaction.type)}`}></div>
