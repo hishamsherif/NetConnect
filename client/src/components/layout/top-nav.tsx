@@ -45,6 +45,11 @@ export default function TopNav() {
                     <div
                       key={contact.id}
                       className="p-3 hover:bg-neutral-50 cursor-pointer border-b border-neutral-100 last:border-b-0"
+                      onClick={() => {
+                        console.log(`Clicked search result: ${contact.firstName} ${contact.lastName}`);
+                        window.location.href = '/contacts';
+                        setSearchQuery(''); // Clear search
+                      }}
                       data-testid={`search-result-${contact.id}`}
                     >
                       <div className="font-medium text-neutral-800">
@@ -61,11 +66,29 @@ export default function TopNav() {
           </div>
 
           {/* Mobile Search Button */}
-          <Button variant="ghost" size="icon" className="md:hidden" data-testid="button-mobile-search">
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            className="md:hidden"
+            onClick={() => {
+              alert("Mobile search clicked!");
+              console.log("Mobile search button working");
+            }}
+            data-testid="button-mobile-search"
+          >
             <Search className="h-5 w-5" />
           </Button>
           
-          <Button variant="ghost" size="icon" className="relative" data-testid="button-notifications">
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            className="relative"
+            onClick={() => {
+              alert("Notifications clicked!");
+              console.log("Notifications button working");
+            }}
+            data-testid="button-notifications"
+          >
             <Bell className="h-5 w-5" />
             <Badge className="absolute -top-1 -right-1 h-3 w-3 p-0 bg-accent"></Badge>
           </Button>

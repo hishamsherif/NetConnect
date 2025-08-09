@@ -69,7 +69,16 @@ export default function MetricsCards() {
   return (
     <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
       {metrics.map((metric, index) => (
-        <Card key={metric.title} className="hover:shadow-md transition-shadow" data-testid={`card-metric-${index}`}>
+        <Card 
+          key={metric.title} 
+          className="hover:shadow-md transition-shadow cursor-pointer" 
+          onClick={() => {
+            console.log(`Clicked ${metric.title} metric card`);
+            // Navigate to contacts page when clicking any metric
+            window.location.href = '/contacts';
+          }}
+          data-testid={`card-metric-${index}`}
+        >
           <CardContent className="p-4 lg:p-6">
             <div className="flex items-center justify-between mb-3 lg:mb-4">
               <div className={`w-8 lg:w-12 h-8 lg:h-12 ${metric.bgColor} rounded-lg flex items-center justify-center`}>

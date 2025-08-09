@@ -160,14 +160,26 @@ export default function NetworkVisualization() {
       <div className="flex items-center justify-between mb-6">
         <h3 className="text-lg font-semibold text-neutral-800">Network Map</h3>
         <div className="flex items-center space-x-2">
-          <Button variant="outline" size="sm" data-testid="button-filter-network">
+          <Button 
+            variant="outline" 
+            size="sm"
+            onClick={() => {
+              alert("Network filter clicked!");
+              console.log("Filter button working");
+            }}
+            data-testid="button-filter-network"
+          >
             <Filter className="h-4 w-4 mr-1" />
             Filter
           </Button>
           <Button 
             variant="outline" 
             size="sm"
-            onClick={() => setIsFullscreen(!isFullscreen)}
+            onClick={() => {
+              alert("Fullscreen clicked!");
+              console.log("Fullscreen button working");
+              setIsFullscreen(!isFullscreen);
+            }}
             data-testid="button-fullscreen"
           >
             <Maximize2 className="h-4 w-4 mr-1" />

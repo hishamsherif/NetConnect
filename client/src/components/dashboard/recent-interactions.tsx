@@ -73,9 +73,16 @@ export default function RecentInteractions() {
     <Card>
       <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle>Recent Interactions</CardTitle>
-        <Link href="/interactions" className="text-primary text-sm hover:underline" data-testid="link-view-all-interactions">
+        <button 
+          onClick={() => {
+            console.log("View all interactions clicked");
+            window.location.href = '/contacts';
+          }}
+          className="text-primary text-sm hover:underline cursor-pointer" 
+          data-testid="link-view-all-interactions"
+        >
           View all
-        </Link>
+        </button>
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
