@@ -12,7 +12,9 @@ import { insertContactSchema } from "@shared/schema";
 import { useCreateContact } from "@/hooks/use-contacts";
 import { z } from "zod";
 
-const formSchema = insertContactSchema.omit({ userId: true });
+const formSchema = insertContactSchema.omit({ userId: true }).extend({
+  relationshipStrength: z.number().min(1).max(5).default(1),
+});
 
 type FormData = z.infer<typeof formSchema>;
 
@@ -43,13 +45,19 @@ export default function AddContactModal({ open, onOpenChange }: AddContactModalP
   });
 
   const onSubmit = (data: FormData) => {
+    console.log("Form submission data:", data);
+    
     createContact.mutate({
       ...data,
       userId: "user-1", // Use default user ID
     }, {
       onSuccess: () => {
+        console.log("Contact created successfully");
         form.reset();
         onOpenChange(false);
+      },
+      onError: (error) => {
+        console.error("Contact creation failed:", error);
       },
     });
   };

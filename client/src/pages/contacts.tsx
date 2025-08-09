@@ -23,7 +23,15 @@ export default function Contacts() {
             <span className="hidden sm:inline">Export</span>
             <span className="sm:hidden">Export</span>
           </Button>
-          <Button onClick={() => setIsAddModalOpen(true)} size="sm" className="flex-1 sm:flex-initial" data-testid="button-add-contact-page">
+          <Button 
+            onClick={() => {
+              console.log("Add Contact button clicked!");
+              setIsAddModalOpen(true);
+            }} 
+            size="sm" 
+            className="flex-1 sm:flex-initial" 
+            data-testid="button-add-contact-page"
+          >
             <Plus className="h-4 w-4 mr-2" />
             <span className="hidden sm:inline">Add Contact</span>
             <span className="sm:hidden">Add</span>
