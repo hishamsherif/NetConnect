@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Download, Plus } from "lucide-react";
 import { useState } from "react";
 import AddContactModal from "@/components/contacts/add-contact-modal";
+import ButtonTest from "@/components/debug/button-test";
 
 export default function Dashboard() {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -72,9 +73,11 @@ export default function Dashboard() {
             variant="outline" 
             size="sm" 
             className="flex-1 sm:flex-initial"
-            onClick={() => {
+            onClick={(e) => {
+              console.log("🔴 DASHBOARD EXPORT BUTTON CLICKED");
+              console.log("Event:", e);
+              console.log("Button element:", e.target);
               alert("Export button clicked!");
-              console.log("Dashboard Export button working");
             }}
             data-testid="button-export"
           >
@@ -83,9 +86,12 @@ export default function Dashboard() {
             <span className="sm:hidden">Export</span>
           </Button>
           <Button 
-            onClick={() => {
+            onClick={(e) => {
+              console.log("🔴 DASHBOARD ADD CONTACT BUTTON CLICKED");
+              console.log("Event:", e);
+              console.log("Button element:", e.target);
+              console.log("Modal state before:", isAddModalOpen);
               alert("Dashboard Add Contact button clicked!");
-              console.log("Dashboard Add Contact button working");
               setIsAddModalOpen(true);
             }} 
             size="sm" 
@@ -102,6 +108,9 @@ export default function Dashboard() {
         open={isAddModalOpen} 
         onOpenChange={setIsAddModalOpen}
       />
+      
+      {/* Debug component - remove this after testing */}
+      <ButtonTest />
     </div>
   );
 }

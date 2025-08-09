@@ -291,7 +291,12 @@ export default function AddContactModal({ open, onOpenChange }: AddContactModalP
               <Button
                 type="button"
                 variant="outline"
-                onClick={() => onOpenChange(false)}
+                onClick={(e) => {
+                  console.log("🔴 CANCEL BUTTON CLICKED - Modal should close");
+                  console.log("Event:", e);
+                  alert("Cancel button working!");
+                  onOpenChange(false);
+                }}
                 data-testid="button-cancel"
               >
                 Cancel
@@ -300,7 +305,10 @@ export default function AddContactModal({ open, onOpenChange }: AddContactModalP
                 type="submit"
                 disabled={createContact.isPending}
                 onClick={(e) => {
-                  console.log("Submit button clicked - form should submit");
+                  console.log("🔴 SUBMIT BUTTON CLICKED - Form should submit");
+                  console.log("Event:", e);
+                  console.log("Form pending state:", createContact.isPending);
+                  alert("Submit button working!");
                   // Don't prevent default, let form handle submission
                 }}
                 data-testid="button-submit-contact"

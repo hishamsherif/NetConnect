@@ -72,9 +72,12 @@ export default function MetricsCards() {
         <Card 
           key={metric.title} 
           className="hover:shadow-md transition-shadow cursor-pointer" 
-          onClick={() => {
-            console.log(`Clicked ${metric.title} metric card`);
-            // Navigate to contacts page when clicking any metric
+          onClick={(e) => {
+            console.log(`🔴 METRIC CARD CLICKED: ${metric.title}`);
+            console.log("Event:", e);
+            console.log("Card element:", e.target);
+            console.log("Navigating to contacts page...");
+            alert(`Clicked ${metric.title} - navigating to contacts`);
             window.location.href = '/contacts';
           }}
           data-testid={`card-metric-${index}`}

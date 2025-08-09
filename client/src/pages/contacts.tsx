@@ -33,8 +33,12 @@ export default function Contacts() {
             <span className="sm:hidden">Export</span>
           </Button>
           <Button 
-            onClick={() => {
-              console.log("Add Contact button clicked!");
+            onClick={(e) => {
+              console.log("🔴 CONTACTS PAGE ADD BUTTON CLICKED");
+              console.log("Event:", e);
+              console.log("Button element:", e.target);
+              console.log("Modal state before:", isAddModalOpen);
+              alert("Contacts page Add Contact button clicked!");
               setIsAddModalOpen(true);
             }} 
             size="sm" 
