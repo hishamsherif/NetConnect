@@ -3,10 +3,11 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { useInteractions } from "@/hooks/use-interactions";
 import { formatDistanceToNow } from "date-fns";
-import { Link } from "wouter";
+import { useLocation } from "wouter";
 
 export default function RecentInteractions() {
   const { data: interactions, isLoading } = useInteractions(undefined, 10);
+  const [, setLocation] = useLocation();
 
   if (isLoading) {
     return (
@@ -76,7 +77,7 @@ export default function RecentInteractions() {
         <button 
           onClick={() => {
             console.log("View all interactions clicked");
-            window.location.href = '/contacts';
+            setLocation('/contacts');
           }}
           className="text-primary text-sm hover:underline cursor-pointer" 
           data-testid="link-view-all-interactions"

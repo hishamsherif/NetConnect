@@ -2,9 +2,11 @@ import { Users, Handshake, Calendar, Clock } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useAnalytics } from "@/hooks/use-interactions";
+import { useLocation } from "wouter";
 
 export default function MetricsCards() {
   const { data: stats, isLoading } = useAnalytics();
+  const [, setLocation] = useLocation();
 
   if (isLoading || !stats) {
     return (
@@ -72,13 +74,9 @@ export default function MetricsCards() {
         <Card 
           key={metric.title} 
           className="hover:shadow-md transition-shadow cursor-pointer" 
-          onClick={(e) => {
-            console.log(`🔴 METRIC CARD CLICKED: ${metric.title}`);
-            console.log("Event:", e);
-            console.log("Card element:", e.target);
-            console.log("Navigating to contacts page...");
-            alert(`Clicked ${metric.title} - navigating to contacts`);
-            window.location.href = '/contacts';
+          onClick={() => {
+            console.log(`${metric.title} metric clicked`);
+            setLocation('/contacts');
           }}
           data-testid={`card-metric-${index}`}
         >

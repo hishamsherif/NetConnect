@@ -5,10 +5,12 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useSearchContacts } from "@/hooks/use-contacts";
+import { useLocation } from "wouter";
 
 export default function TopNav() {
   const [searchQuery, setSearchQuery] = useState("");
   const { data: searchResults, isLoading } = useSearchContacts(searchQuery);
+  const [, setLocation] = useLocation();
 
   return (
     <nav className="bg-white border-b border-neutral-200 px-4 lg:px-6 py-4 sticky top-0 z-40">
@@ -46,8 +48,8 @@ export default function TopNav() {
                       key={contact.id}
                       className="p-3 hover:bg-neutral-50 cursor-pointer border-b border-neutral-100 last:border-b-0"
                       onClick={() => {
-                        console.log(`Clicked search result: ${contact.firstName} ${contact.lastName}`);
-                        window.location.href = '/contacts';
+                        console.log(`🔴 SEARCH RESULT CLICKED: ${contact.firstName} ${contact.lastName}`);
+                        setLocation('/contacts');
                         setSearchQuery(''); // Clear search
                       }}
                       data-testid={`search-result-${contact.id}`}
