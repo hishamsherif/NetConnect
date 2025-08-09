@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Button Test</title>
+</head>
+<body>
+    <h1>Button Functionality Test</h1>
+    <button onclick="alert('Button works!')">Test Basic Button</button>
+    
+    <script>
+        console.log("Testing basic button functionality");
+        
+        // Test if buttons are clickable
+        function testButtonClick() {
+            console.log("Button clicked - basic functionality works");
+            return true;
+        }
+        
+        // Add event listener to test
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log("DOM loaded, testing button binding");
+        });
+    </script>
+</body>
+</html>

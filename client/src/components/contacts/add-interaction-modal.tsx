@@ -175,7 +175,10 @@ export default function AddInteractionModal({ open, onOpenChange, contact }: Add
               <Button
                 type="button"
                 variant="outline"
-                onClick={() => onOpenChange(false)}
+                onClick={() => {
+                  console.log("Cancel interaction button clicked");
+                  onOpenChange(false);
+                }}
                 data-testid="button-cancel-interaction"
               >
                 Cancel
@@ -183,6 +186,10 @@ export default function AddInteractionModal({ open, onOpenChange, contact }: Add
               <Button
                 type="submit"
                 disabled={createInteraction.isPending}
+                onClick={(e) => {
+                  console.log("Submit interaction button clicked");
+                  // Don't prevent default, let form handle submission
+                }}
                 data-testid="button-submit-interaction"
               >
                 {createInteraction.isPending ? "Logging..." : "Log Interaction"}

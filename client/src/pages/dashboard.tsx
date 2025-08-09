@@ -68,12 +68,30 @@ export default function Dashboard() {
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
         <h3 className="text-lg lg:text-xl font-semibold text-neutral-800">Quick Actions</h3>
         <div className="flex items-center space-x-2 lg:space-x-3">
-          <Button variant="outline" size="sm" className="flex-1 sm:flex-initial" data-testid="button-export">
+          <Button 
+            variant="outline" 
+            size="sm" 
+            className="flex-1 sm:flex-initial"
+            onClick={() => {
+              alert("Export button clicked!");
+              console.log("Dashboard Export button working");
+            }}
+            data-testid="button-export"
+          >
             <Download className="h-4 w-4 mr-2" />
             <span className="hidden sm:inline">Export Data</span>
             <span className="sm:hidden">Export</span>
           </Button>
-          <Button onClick={() => setIsAddModalOpen(true)} size="sm" className="flex-1 sm:flex-initial" data-testid="button-add-contact-dashboard">
+          <Button 
+            onClick={() => {
+              alert("Dashboard Add Contact button clicked!");
+              console.log("Dashboard Add Contact button working");
+              setIsAddModalOpen(true);
+            }} 
+            size="sm" 
+            className="flex-1 sm:flex-initial" 
+            data-testid="button-add-contact-dashboard"
+          >
             <Plus className="h-4 w-4 mr-2" />
             Add Contact
           </Button>

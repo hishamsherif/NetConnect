@@ -299,6 +299,10 @@ export default function AddContactModal({ open, onOpenChange }: AddContactModalP
               <Button
                 type="submit"
                 disabled={createContact.isPending}
+                onClick={(e) => {
+                  console.log("Submit button clicked - form should submit");
+                  // Don't prevent default, let form handle submission
+                }}
                 data-testid="button-submit-contact"
               >
                 {createContact.isPending ? "Adding..." : "Add Contact"}

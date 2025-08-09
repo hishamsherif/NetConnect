@@ -18,7 +18,16 @@ export default function Contacts() {
           <p className="text-sm lg:text-base text-neutral-600">Manage your professional network and relationships</p>
         </div>
         <div className="flex items-center space-x-2 lg:space-x-3">
-          <Button variant="outline" size="sm" className="flex-1 sm:flex-initial" data-testid="button-export-contacts">
+          <Button 
+            variant="outline" 
+            size="sm" 
+            className="flex-1 sm:flex-initial" 
+            onClick={() => {
+              alert("Export button clicked!");
+              console.log("Export button working");
+            }}
+            data-testid="button-export-contacts"
+          >
             <Download className="h-4 w-4 mr-2" />
             <span className="hidden sm:inline">Export</span>
             <span className="sm:hidden">Export</span>
