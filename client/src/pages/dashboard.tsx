@@ -31,10 +31,8 @@ export default function Dashboard() {
           <NetworkVisualization />
         </div>
 
-        {/* Recent Activity & Quick Actions */}
+        {/* Quick Actions & Follow-ups */}
         <div className="space-y-4 lg:space-y-6">
-          <RecentInteractions />
-          
           {/* Upcoming Follow-ups */}
           <Card>
             <CardHeader className="flex flex-row items-center justify-between">
@@ -62,6 +60,11 @@ export default function Dashboard() {
             </CardContent>
           </Card>
         </div>
+      </div>
+
+      {/* Recent Interactions - Moved to Bottom */}
+      <div className="mb-8">
+        <RecentInteractions />
       </div>
 
       {/* Action Bar */}

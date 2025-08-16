@@ -80,8 +80,8 @@ export default function Contacts() {
 
       {/* Contact Detail Modal */}
       <Dialog open={!!selectedContact} onOpenChange={() => setSelectedContact(null)}>
-        <DialogContent className="max-w-2xl">
-          <DialogHeader>
+        <DialogContent className="max-w-2xl bg-white border border-gray-200 shadow-xl p-0 overflow-hidden">
+          <DialogHeader className="px-6 py-6 pb-4 bg-white border-b border-gray-200">
             <DialogTitle className="flex items-center space-x-3">
               <Avatar className="h-12 w-12">
                 <AvatarFallback className="bg-blue-50 text-blue-600 font-semibold text-lg">
@@ -98,7 +98,7 @@ export default function Contacts() {
           </DialogHeader>
           
           {selectedContact && (
-            <div className="space-y-6">
+            <div className="px-6 py-6 space-y-6 bg-white">
               {/* Company & Category */}
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-4">
@@ -127,7 +127,7 @@ export default function Contacts() {
               {/* Contact Information */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {selectedContact.email && (
-                  <div className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
+                  <div className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg border border-gray-200">
                     <Mail className="h-5 w-5 text-blue-500" />
                     <div>
                       <p className="text-sm text-gray-600">Email</p>
@@ -137,7 +137,7 @@ export default function Contacts() {
                 )}
                 
                 {selectedContact.phone && (
-                  <div className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
+                  <div className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg border border-gray-200">
                     <Phone className="h-5 w-5 text-green-500" />
                     <div>
                       <p className="text-sm text-gray-600">Phone</p>
@@ -147,7 +147,7 @@ export default function Contacts() {
                 )}
                 
                 {selectedContact.location && (
-                  <div className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
+                  <div className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg border border-gray-200">
                     <MapPin className="h-5 w-5 text-red-500" />
                     <div>
                       <p className="text-sm text-gray-600">Location</p>
@@ -165,6 +165,7 @@ export default function Contacts() {
                     console.log("Edit contact:", selectedContact.firstName, selectedContact.lastName);
                     // TODO: Implement edit functionality
                   }}
+                  className="border-gray-300 hover:bg-gray-50"
                 >
                   Edit Contact
                 </Button>
@@ -173,6 +174,7 @@ export default function Contacts() {
                     console.log("Add interaction for:", selectedContact.firstName, selectedContact.lastName);
                     // TODO: Implement add interaction functionality
                   }}
+                  className="bg-blue-500 hover:bg-blue-600"
                 >
                   Add Interaction
                 </Button>
