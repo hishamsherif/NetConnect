@@ -135,7 +135,8 @@ export default function MobileContactCard({ contact, onEdit, onDelete, onInterac
                   variant="ghost"
                   onClick={() => {
                     console.log("Editing contact:", contact.firstName, contact.lastName);
-                    onEdit?.(contact);
+                    // Navigate to edit page instead of just calling onEdit
+                    window.location.href = `/contacts/${contact.id}/edit`;
                   }}
                   className="h-8 w-8 p-0"
                   data-testid={`button-edit-${contact.id}`}

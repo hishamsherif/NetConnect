@@ -78,6 +78,7 @@ export default function Dashboard() {
             onClick={() => {
               console.log("Export data clicked");
               // TODO: Implement export functionality
+              alert("Export functionality coming soon!");
             }}
             data-testid="button-export"
           >

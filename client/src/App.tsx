@@ -19,7 +19,9 @@ function Router() {
         <Route path="/" component={Dashboard} />
         <Route path="/contacts" component={Contacts} />
         <Route path="/contacts/:id" component={ContactProfile} />
-        <Route path="/network" component={NetworkMap} />
+        <Route path="/contacts/:id/edit" component={ContactProfile} />
+        <Route path="/contacts/:id/notes" component={ContactProfile} />
+        <Route path="/network-map" component={NetworkMap} />
         <Route path="/analytics" component={Analytics} />
 
         <Route component={NotFound} />

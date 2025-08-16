@@ -339,7 +339,7 @@ export default function ContactTable({ onContactSelect, initialFilter }: Contact
                         size="sm"
                         onClick={() => {
                           console.log("Edit contact:", contact.firstName, contact.lastName);
-                          onContactSelect?.(contact);
+                          setLocation(`/contacts/${contact.id}/edit`);
                         }}
                         className="h-10 w-10 p-0 hover:bg-green-50 hover:text-green-600 rounded-lg transition-colors"
                         data-testid={`button-edit-${contact.id}`}

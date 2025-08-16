@@ -156,6 +156,7 @@ export default function Sidebar({ onAddContact, onImportCSV }: SidebarProps) {
             onAddContact?.();
           }}
           className="w-full bg-blue-500 text-white hover:bg-blue-600 focus:bg-blue-600 active:bg-blue-700 px-4 py-3 rounded-xl font-medium transition-all duration-200 hover:scale-[0.98] focus:scale-[0.98] active:scale-[0.96] flex items-center justify-center space-x-2"
+          data-testid="button-add-contact-sidebar"
         >
           <Plus className="h-5 w-5" />
           <span>Add Contact</span>
@@ -168,6 +169,7 @@ export default function Sidebar({ onAddContact, onImportCSV }: SidebarProps) {
           }}
           variant="outline"
           className="w-full bg-white text-gray-700 hover:bg-gray-50 focus:bg-gray-50 active:bg-gray-100 px-4 py-3 rounded-xl font-medium border border-gray-200 hover:border-gray-300 transition-all duration-200 hover:scale-[0.98] focus:scale-[0.98] flex items-center justify-center space-x-2"
+          data-testid="button-import-csv-sidebar"
         >
           <Upload className="h-5 w-5" />
           <span>Import CSV</span>

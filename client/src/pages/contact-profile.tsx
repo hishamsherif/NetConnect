@@ -169,7 +169,16 @@ export default function ContactProfile() {
               <Separator className="my-4" />
 
               <div className="flex gap-2">
-                <Button size="sm" className="flex-1">
+                <Button 
+                  size="sm" 
+                  className="flex-1"
+                  onClick={() => {
+                    console.log("Edit contact clicked:", contact.firstName, contact.lastName);
+                    // TODO: Implement edit functionality - could open edit modal or navigate to edit page
+                    setLocation(`/contacts/${contact.id}/edit`);
+                  }}
+                  data-testid="button-edit-contact"
+                >
                   <Edit className="h-4 w-4 mr-2" />
                   Edit
                 </Button>
@@ -272,7 +281,16 @@ export default function ContactProfile() {
                     <div className="text-center py-8">
                       <User className="h-8 w-8 text-gray-400 mx-auto mb-2" />
                       <p className="text-gray-500">No notes added yet</p>
-                      <Button size="sm" className="mt-2">
+                      <Button 
+                        size="sm" 
+                        className="mt-2"
+                        onClick={() => {
+                          console.log("Add notes clicked for:", contact.firstName, contact.lastName);
+                          // TODO: Implement add notes functionality
+                          setLocation(`/contacts/${contact.id}/notes`);
+                        }}
+                        data-testid="button-add-notes"
+                      >
                         <Edit className="h-4 w-4 mr-2" />
                         Add Notes
                       </Button>
