@@ -2,154 +2,215 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Enhanced Design System Variables */
+/* Brutalist Design System Variables */
 :root {
-  /* Color Palette */
-  --color-primary-50: #eff6ff;
-  --color-primary-100: #dbeafe;
-  --color-primary-500: #3b82f6;
-  --color-primary-600: #2563eb;
-  --color-primary-700: #1d4ed8;
+  /* Color Palette - Stark Black/White */
+  --color-black: #000000;
+  --color-white: #ffffff;
+  --color-gray-100: #f5f5f5;
+  --color-gray-200: #e5e5e5;
+  --color-gray-300: #d4d4d4;
+  --color-gray-400: #a3a3a3;
+  --color-gray-500: #737373;
+  --color-gray-600: #525252;
+  --color-gray-700: #404040;
+  --color-gray-800: #262626;
+  --color-gray-900: #171717;
   
-  --color-secondary-50: #f0fdf4;
-  --color-secondary-100: #dcfce7;
-  --color-secondary-500: #10b981;
-  --color-secondary-600: #059669;
+  /* Accent Colors - High Contrast */
+  --color-red: #dc2626;
+  --color-green: #16a34a;
+  --color-blue: #2563eb;
+  --color-yellow: #ca8a04;
+  --color-purple: #9333ea;
   
-  --color-accent-50: #fdf4ff;
-  --color-accent-100: #fae8ff;
-  --color-accent-500: #a855f7;
-  --color-accent-600: #9333ea;
-  
-  /* Spacing Scale */
+  /* Spacing Scale - Dramatic */
   --spacing-xs: 0.25rem;
   --spacing-sm: 0.5rem;
   --spacing-md: 1rem;
   --spacing-lg: 1.5rem;
   --spacing-xl: 2rem;
   --spacing-2xl: 3rem;
+  --spacing-3xl: 4rem;
+  --spacing-4xl: 6rem;
   
-  /* Border Radius */
-  --radius-sm: 0.375rem;
-  --radius-md: 0.5rem;
-  --radius-lg: 0.75rem;
-  --radius-xl: 1rem;
-  --radius-2xl: 1.5rem;
+  /* Border Radius - Sharp Edges */
+  --radius-none: 0;
+  --radius-sm: 0.125rem;
+  --radius-md: 0.25rem;
+  --radius-lg: 0.5rem;
   
-  /* Shadows */
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  /* Shadows - Harsh */
+  --shadow-none: none;
+  --shadow-sm: 2px 2px 0px 0px rgba(0,0,0,1);
+  --shadow-md: 4px 4px 0px 0px rgba(0,0,0,1);
+  --shadow-lg: 8px 8px 0px 0px rgba(0,0,0,1);
+  --shadow-xl: 12px 12px 0px 0px rgba(0,0,0,1);
   
-  /* Transitions */
-  --transition-fast: 150ms ease-out;
-  --transition-normal: 250ms ease-out;
-  --transition-slow: 350ms ease-out;
+  /* Transitions - Sharp */
+  --transition-fast: 100ms ease-out;
+  --transition-normal: 200ms ease-out;
+  --transition-slow: 300ms ease-out;
+  
+  /* Typography - Bold */
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+  --font-weight-black: 900;
+  
+  /* Letter Spacing - Dramatic */
+  --tracking-tighter: -0.05em;
+  --tracking-tight: -0.025em;
+  --tracking-normal: 0em;
+  --tracking-wide: 0.025em;
+  --tracking-wider: 0.05em;
+  --tracking-widest: 0.1em;
 }
 
-/* Enhanced Base Styles */
+/* Brutalist Base Styles */
 @layer base {
   html {
-    scroll-behavior: smooth;
+    scroll-behavior: auto;
   }
   
   body {
-    @apply bg-gray-50 text-gray-900 antialiased;
-    font-feature-settings: "rlig" 1, "calt" 1;
+    @apply bg-white text-black antialiased;
+    font-feature-settings: "kern" 1, "liga" 1;
   }
   
-  /* Enhanced Focus Styles */
+  /* Stark Focus Styles */
   *:focus-visible {
-    @apply outline-none ring-2 ring-blue-500 ring-offset-2 ring-offset-white;
+    @apply outline-none ring-2 ring-black ring-offset-2 ring-offset-white;
   }
   
-  /* Enhanced Selection */
+  /* High Contrast Selection */
   ::selection {
-    @apply bg-blue-100 text-blue-900;
+    @apply bg-black text-white;
   }
+  
+  /* Brutalist Headings */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-black uppercase tracking-wider;
+  }
+  
+  h1 { @apply text-4xl; }
+  h2 { @apply text-3xl; }
+  h3 { @apply text-2xl; }
+  h4 { @apply text-xl; }
+  h5 { @apply text-lg; }
+  h6 { @apply text-base; }
 }
 
-/* Enhanced Component Styles */
+/* Brutalist Component Styles */
 @layer components {
-  .card-hover {
-    @apply transition-all duration-300 ease-out hover:shadow-lg hover:-translate-y-1;
+  .brutalist-card {
+    @apply bg-white border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:-translate-x-1 hover:-translate-y-1 transition-all duration-200;
   }
   
-  .button-primary {
-    @apply bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold py-3 px-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200;
+  .brutalist-button-primary {
+    @apply bg-black text-white border-2 border-black py-4 px-6 text-lg font-black uppercase tracking-wider hover:bg-white hover:text-black transition-all duration-200 rounded-none;
   }
   
-  .button-secondary {
-    @apply bg-white border border-gray-200 text-gray-700 hover:bg-gray-50 hover:border-gray-300 font-semibold py-3 px-6 rounded-xl transition-all duration-200;
+  .brutalist-button-secondary {
+    @apply bg-white text-black border-2 border-black py-4 px-6 text-lg font-black uppercase tracking-wider hover:bg-black hover:text-white transition-all duration-200 rounded-none;
   }
   
-  .input-enhanced {
-    @apply w-full px-4 py-3 border border-gray-200 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200;
+  .brutalist-input {
+    @apply w-full px-4 py-4 border-2 border-black focus:border-black focus:ring-0 text-lg font-bold rounded-none bg-white text-black placeholder-black/60;
   }
   
-  .badge-enhanced {
-    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium border transition-all duration-200;
+  .brutalist-badge {
+    @apply inline-flex items-center px-4 py-2 text-base font-black border-2 border-black rounded-none;
+  }
+  
+  .brutalist-table-header {
+    @apply bg-black text-white font-black text-lg uppercase tracking-wider p-6;
+  }
+  
+  .brutalist-table-row {
+    @apply hover:bg-gray-100 border-b-2 border-black;
+  }
+  
+  .brutalist-checkbox {
+    @apply border-2 border-black data-[state=checked]:bg-black data-[state=checked]:text-white rounded-none;
   }
 }
 
-/* Enhanced Animation Classes */
+/* Brutalist Animation Classes */
 @layer utilities {
-  .animate-fade-in {
-    animation: fadeIn 0.5s ease-out;
+  .animate-brutalist-hover {
+    animation: brutalistHover 0.2s ease-out;
   }
   
-  .animate-slide-up {
-    animation: slideUp 0.3s ease-out;
+  .animate-brutalist-press {
+    animation: brutalistPress 0.1s ease-out;
   }
   
-  .animate-scale-in {
-    animation: scaleIn 0.2s ease-out;
+  .animate-brutalist-focus {
+    animation: brutalistFocus 0.15s ease-out;
   }
 }
 
-/* Custom Animations */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+/* Brutalist Animations */
+@keyframes brutalistHover {
+  0% { transform: translateX(0) translateY(0); box-shadow: 4px 4px 0px 0px rgba(0,0,0,1); }
+  100% { transform: translateX(-1px) translateY(-1px); box-shadow: 8px 8px 0px 0px rgba(0,0,0,1); }
 }
 
-@keyframes slideUp {
-  from { transform: translateY(20px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+@keyframes brutalistPress {
+  0% { transform: translateX(-1px) translateY(-1px); box-shadow: 8px 8px 0px 0px rgba(0,0,0,1); }
+  100% { transform: translateX(0) translateY(0); box-shadow: 4px 4px 0px 0px rgba(0,0,0,1); }
 }
 
-@keyframes scaleIn {
-  from { transform: scale(0.95); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
+@keyframes brutalistFocus {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+  100% { transform: scale(1); }
 }
 
-/* Enhanced Scrollbar */
+/* Brutalist Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 12px;
+  height: 12px;
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-gray-100 rounded-full;
+  @apply bg-white border-2 border-black;
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-gray-300 rounded-full hover:bg-gray-400 transition-colors;
+  @apply bg-black border-2 border-black;
 }
 
-/* Enhanced Loading States */
-.loading-skeleton {
-  @apply animate-pulse bg-gray-200 rounded;
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-800;
 }
 
-.loading-shimmer {
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-  background-size: 200% 100%;
-  animation: shimmer 1.5s infinite;
+/* Brutalist Loading States */
+.loading-brutalist {
+  @apply bg-black animate-pulse;
 }
 
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+.loading-brutalist-spinner {
+  @apply w-8 h-8 border-4 border-black border-t-transparent rounded-full animate-spin;
+}
+
+/* Brutalist Utilities */
+.text-brutalist {
+  @apply font-black uppercase tracking-wider;
+}
+
+.border-brutalist {
+  @apply border-2 border-black;
+}
+
+.shadow-brutalist {
+  @apply shadow-[4px_4px_0px_0px_rgba(0,0,0,1)];
+}
+
+.shadow-brutalist-lg {
+  @apply shadow-[8px_8px_0px_0px_rgba(0,0,0,1)];
 }
