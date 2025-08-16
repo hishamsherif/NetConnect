@@ -23,15 +23,16 @@ import { useLocation } from "wouter";
 
 interface ContactTableProps {
   onContactSelect?: (contact: ContactWithRelations) => void;
+  initialFilter?: string;
 }
 
-export default function ContactTable({ onContactSelect }: ContactTableProps) {
+export default function ContactTable({ onContactSelect, initialFilter }: ContactTableProps) {
   const { data: contacts, isLoading } = useContacts();
   const [location, setLocation] = useLocation();
   const [selectedContacts, setSelectedContacts] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [categoryFilter, setCategoryFilter] = useState<string>("all");
-  const [strengthFilter, setStrengthFilter] = useState<string>("all");
+  const [strengthFilter, setStrengthFilter] = useState<string>(initialFilter === "strong" ? "strong" : initialFilter === "dormant" ? "weak" : "all");
   const [selectedContact, setSelectedContact] = useState<ContactWithRelations | null>(null);
   const [showInteractionModal, setShowInteractionModal] = useState(false);
 
@@ -219,6 +220,7 @@ export default function ContactTable({ onContactSelect }: ContactTableProps) {
                 setSelectedContact(contact);
                 setShowInteractionModal(true);
               }}
+              onView={(contact) => setLocation(`/contacts/${contact.id}`)}
             />
           ))}
           {filteredContacts.length === 0 && (
@@ -275,7 +277,7 @@ export default function ContactTable({ onContactSelect }: ContactTableProps) {
                         className="cursor-pointer hover:text-blue-600 transition-colors duration-200"
                         onClick={() => {
                           console.log("Contact selected:", contact.firstName, contact.lastName);
-                          onContactSelect?.(contact);
+                          setLocation(`/contacts/${contact.id}`);
                         }}
                       >
                         <div className="font-semibold text-gray-900 text-base hover:text-blue-600" data-testid={`text-contact-name-${contact.id}`}>
@@ -325,7 +327,7 @@ export default function ContactTable({ onContactSelect }: ContactTableProps) {
                         size="sm"
                         onClick={() => {
                           console.log("View contact:", contact.firstName, contact.lastName);
-                          onContactSelect?.(contact);
+                          setLocation(`/contacts/${contact.id}`);
                         }}
                         className="h-10 w-10 p-0 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors"
                         data-testid={`button-view-${contact.id}`}

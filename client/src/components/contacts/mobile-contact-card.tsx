@@ -12,9 +12,10 @@ interface MobileContactCardProps {
   onEdit?: (contact: ContactWithRelations) => void;
   onDelete?: (contact: ContactWithRelations) => void;
   onInteract?: (contact: ContactWithRelations) => void;
+  onView?: (contact: ContactWithRelations) => void;
 }
 
-export default function MobileContactCard({ contact, onEdit, onDelete, onInteract }: MobileContactCardProps) {
+export default function MobileContactCard({ contact, onEdit, onDelete, onInteract, onView }: MobileContactCardProps) {
   const [showInteractionModal, setShowInteractionModal] = useState(false);
   const initials = `${contact.firstName?.[0] || ''}${contact.lastName?.[0] || ''}`;
   const strengthColors = {
@@ -39,7 +40,7 @@ export default function MobileContactCard({ contact, onEdit, onDelete, onInterac
       data-testid={`mobile-contact-card-${contact.id}`}
       onClick={() => {
         console.log("Mobile contact card clicked:", contact.firstName, contact.lastName);
-        onEdit?.(contact);
+        onView?.(contact);
       }}
     >
       <CardContent className="p-4">
