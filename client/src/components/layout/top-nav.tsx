@@ -7,7 +7,11 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useSearchContacts } from "@/hooks/use-contacts";
 import { useLocation } from "wouter";
 
-export default function TopNav() {
+interface TopNavProps {
+  onMobileMenuClick?: () => void;
+}
+
+export default function TopNav({ onMobileMenuClick }: TopNavProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const { data: searchResults, isLoading } = useSearchContacts(searchQuery);
   const [, setLocation] = useLocation();
@@ -16,6 +20,17 @@ export default function TopNav() {
     <nav className="bg-white border-b border-neutral-200 px-4 lg:px-6 py-4 sticky top-0 z-40">
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-4">
+          {/* Mobile Menu Button - Only show on mobile */}
+          <Button
+            variant="ghost"
+            size="icon"
+            className="lg:hidden"
+            onClick={onMobileMenuClick}
+            data-testid="button-mobile-menu-top"
+          >
+            <Menu className="h-5 w-5" />
+          </Button>
+          
           <div className="flex items-center space-x-3">
             <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
               <i className="fas fa-network-wired text-white text-sm"></i>
@@ -48,7 +63,7 @@ export default function TopNav() {
                       key={contact.id}
                       className="p-3 hover:bg-neutral-50 cursor-pointer border-b border-neutral-100 last:border-b-0"
                       onClick={() => {
-                        console.log(`🔴 SEARCH RESULT CLICKED: ${contact.firstName} ${contact.lastName}`);
+                        console.log(`Search result clicked: ${contact.firstName} ${contact.lastName}`);
                         setLocation('/contacts');
                         setSearchQuery(''); // Clear search
                       }}
@@ -73,8 +88,8 @@ export default function TopNav() {
             size="icon" 
             className="md:hidden"
             onClick={() => {
-              alert("Mobile search clicked!");
-              console.log("Mobile search button working");
+              // TODO: Implement mobile search modal
+              console.log("Mobile search clicked");
             }}
             data-testid="button-mobile-search"
           >
@@ -86,8 +101,8 @@ export default function TopNav() {
             size="icon" 
             className="relative"
             onClick={() => {
-              alert("Notifications clicked!");
-              console.log("Notifications button working");
+              console.log("Notifications clicked");
+              // TODO: Implement notifications
             }}
             data-testid="button-notifications"
           >

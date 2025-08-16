@@ -23,8 +23,8 @@ export default function Contacts() {
             size="sm" 
             className="flex-1 sm:flex-initial" 
             onClick={() => {
-              alert("Export button clicked!");
-              console.log("Export button working");
+              console.log("Export button clicked");
+              // TODO: Implement export functionality
             }}
             data-testid="button-export-contacts"
           >
@@ -33,14 +33,7 @@ export default function Contacts() {
             <span className="sm:hidden">Export</span>
           </Button>
           <Button 
-            onClick={(e) => {
-              console.log("🔴 CONTACTS PAGE ADD BUTTON CLICKED");
-              console.log("Event:", e);
-              console.log("Button element:", e.target);
-              console.log("Modal state before:", isAddModalOpen);
-              alert("Contacts page Add Contact button clicked!");
-              setIsAddModalOpen(true);
-            }} 
+            onClick={() => setIsAddModalOpen(true)} 
             size="sm" 
             className="flex-1 sm:flex-initial" 
             data-testid="button-add-contact-page"

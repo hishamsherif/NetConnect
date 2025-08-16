@@ -14,11 +14,25 @@ export default function NetworkMap() {
           <p className="text-neutral-600">Interactive visualization of your professional network</p>
         </div>
         <div className="flex items-center space-x-3">
-          <Button variant="outline" data-testid="button-export-network">
+          <Button 
+            variant="outline" 
+            onClick={() => {
+              console.log("Export network clicked");
+              // TODO: Implement network export
+            }}
+            data-testid="button-export-network"
+          >
             <Download className="h-4 w-4 mr-2" />
             Export
           </Button>
-          <Button variant="outline" data-testid="button-settings">
+          <Button 
+            variant="outline" 
+            onClick={() => {
+              console.log("Network settings clicked");
+              // TODO: Implement network settings
+            }}
+            data-testid="button-settings"
+          >
             <Settings className="h-4 w-4 mr-2" />
             Settings
           </Button>
@@ -31,15 +45,39 @@ export default function NetworkMap() {
           <div className="flex flex-wrap items-center gap-4">
             <div className="flex items-center space-x-2">
               <span className="text-sm font-medium text-neutral-700">Filter by:</span>
-              <Button variant="outline" size="sm" data-testid="button-filter-category">
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={() => {
+                  console.log("Filter by category clicked");
+                  // TODO: Implement category filtering
+                }}
+                data-testid="button-filter-category"
+              >
                 <Filter className="h-4 w-4 mr-1" />
                 Category
               </Button>
-              <Button variant="outline" size="sm" data-testid="button-filter-strength">
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={() => {
+                  console.log("Filter by strength clicked");
+                  // TODO: Implement strength filtering
+                }}
+                data-testid="button-filter-strength"
+              >
                 <Filter className="h-4 w-4 mr-1" />
                 Strength
               </Button>
-              <Button variant="outline" size="sm" data-testid="button-filter-company">
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={() => {
+                  console.log("Filter by company clicked");
+                  // TODO: Implement company filtering
+                }}
+                data-testid="button-filter-company"
+              >
                 <Filter className="h-4 w-4 mr-1" />
                 Company
               </Button>

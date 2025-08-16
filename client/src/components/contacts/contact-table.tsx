@@ -265,8 +265,7 @@ export default function ContactTable({ onContactSelect }: ContactTableProps) {
                         variant="ghost"
                         size="sm"
                         onClick={() => {
-                          alert(`Viewing contact: ${contact.firstName} ${contact.lastName}`);
-                          console.log("View contact button working");
+                          console.log("View contact:", contact.firstName, contact.lastName);
                           onContactSelect?.(contact);
                         }}
                         data-testid={`button-view-${contact.id}`}
@@ -277,8 +276,8 @@ export default function ContactTable({ onContactSelect }: ContactTableProps) {
                         variant="ghost"
                         size="sm"
                         onClick={() => {
-                          alert(`Editing contact: ${contact.firstName} ${contact.lastName}`);
-                          console.log("Edit contact button working");
+                          console.log("Edit contact:", contact.firstName, contact.lastName);
+                          // TODO: Implement edit functionality
                         }}
                         data-testid={`button-edit-${contact.id}`}
                       >
@@ -288,8 +287,7 @@ export default function ContactTable({ onContactSelect }: ContactTableProps) {
                         variant="ghost"
                         size="sm"
                         onClick={() => {
-                          alert(`Adding interaction for: ${contact.firstName} ${contact.lastName}`);
-                          console.log("Add interaction button working");
+                          console.log("Add interaction for:", contact.firstName, contact.lastName);
                           setSelectedContact(contact);
                           setShowInteractionModal(true);
                         }}

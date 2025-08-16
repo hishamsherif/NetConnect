@@ -84,6 +84,10 @@ export default function Sidebar() {
             <Button
               variant="outline"
               className="w-full flex items-center space-x-3 px-3 py-2 mt-2 border border-neutral-300 text-neutral-700 rounded-lg hover:bg-neutral-50 transition-colors"
+              onClick={() => {
+                console.log("Import CSV clicked");
+                // TODO: Implement CSV import functionality
+              }}
               data-testid="button-import-csv"
             >
               <FileText className="h-5 w-5" />

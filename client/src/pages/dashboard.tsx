@@ -83,10 +83,7 @@ export default function Dashboard() {
             <span className="sm:hidden">Export</span>
           </Button>
           <Button 
-            onClick={() => {
-              console.log("Add contact clicked");
-              setIsAddModalOpen(true);
-            }} 
+            onClick={() => setIsAddModalOpen(true)} 
             size="sm" 
             className="flex-1 sm:flex-initial" 
             data-testid="button-add-contact-dashboard"

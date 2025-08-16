@@ -164,8 +164,8 @@ export default function NetworkVisualization() {
             variant="outline" 
             size="sm"
             onClick={() => {
-              alert("Network filter clicked!");
-              console.log("Filter button working");
+              console.log("Network filter clicked");
+              // TODO: Implement network filtering
             }}
             data-testid="button-filter-network"
           >
@@ -176,8 +176,7 @@ export default function NetworkVisualization() {
             variant="outline" 
             size="sm"
             onClick={() => {
-              alert("Fullscreen clicked!");
-              console.log("Fullscreen button working");
+              console.log("Fullscreen clicked");
               setIsFullscreen(!isFullscreen);
             }}
             data-testid="button-fullscreen"

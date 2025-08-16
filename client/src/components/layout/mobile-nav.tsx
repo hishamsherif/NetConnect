@@ -121,6 +121,10 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
             <Button
               variant="outline"
               className="w-full flex items-center space-x-3 px-4 py-3 mt-3 border border-neutral-300 text-neutral-700 rounded-lg hover:bg-neutral-50 active:bg-neutral-100 transition-colors touch-manipulation"
+              onClick={() => {
+                console.log("Import CSV clicked");
+                // TODO: Implement CSV import
+              }}
               data-testid="mobile-button-import-csv"
             >
               <FileText className="h-6 w-6" />
