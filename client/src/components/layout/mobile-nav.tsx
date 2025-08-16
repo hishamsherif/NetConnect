@@ -30,10 +30,8 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
   const navigation = [
     { name: "Dashboard", href: "/", icon: BarChart3, current: location === "/" },
     { name: "Contacts", href: "/contacts", icon: Users, current: location === "/contacts", count: contacts?.length },
-    { name: "Network Map", href: "/network", icon: Network, current: location === "/network" },
-    { name: "Interactions", href: "/interactions", icon: MessageCircle, current: location === "/interactions" },
+    { name: "Network Map", href: "/network-map", icon: Network, current: location === "/network-map" },
     { name: "Analytics", href: "/analytics", icon: TrendingUp, current: location === "/analytics" },
-    { name: "Tags", href: "/tags", icon: Tags, current: location === "/tags" },
   ];
 
   const handleNavClick = () => {

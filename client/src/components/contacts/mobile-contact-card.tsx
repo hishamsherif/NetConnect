@@ -34,7 +34,14 @@ export default function MobileContactCard({ contact, onEdit, onDelete, onInterac
   };
 
   return (
-    <Card className="hover:shadow-md transition-shadow touch-manipulation" data-testid={`mobile-contact-card-${contact.id}`}>
+    <Card 
+      className="hover:shadow-md transition-shadow touch-manipulation cursor-pointer" 
+      data-testid={`mobile-contact-card-${contact.id}`}
+      onClick={() => {
+        console.log("Mobile contact card clicked:", contact.firstName, contact.lastName);
+        onEdit?.(contact);
+      }}
+    >
       <CardContent className="p-4">
         <div className="flex items-start space-x-3">
           {/* Avatar */}

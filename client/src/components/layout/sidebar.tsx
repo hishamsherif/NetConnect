@@ -23,7 +23,7 @@ export default function Sidebar({ onAddContact, onImportCSV }: SidebarProps) {
   const navigationItems = [
     {
       name: "Dashboard",
-      href: "/dashboard",
+      href: "/",
       icon: BarChart3,
       description: "Overview and metrics",
       count: totalContacts

@@ -4,6 +4,7 @@ import TopNav from "./top-nav";
 import MobileNav from "./mobile-nav";
 import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
+import { useLocation } from "wouter";
 
 interface LayoutProps {
   children: ReactNode;
@@ -11,6 +12,18 @@ interface LayoutProps {
 
 export default function Layout({ children }: LayoutProps) {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
+  const [, setLocation] = useLocation();
+
+  const handleAddContact = () => {
+    console.log("Add Contact clicked from layout");
+    setLocation('/contacts');
+    // TODO: Open add contact modal
+  };
+
+  const handleImportCSV = () => {
+    console.log("Import CSV clicked from layout");
+    // TODO: Implement CSV import functionality
+  };
 
   return (
     <div className="bg-neutral-50 min-h-screen">
@@ -18,7 +31,10 @@ export default function Layout({ children }: LayoutProps) {
       <div className="flex">
         {/* Desktop Sidebar */}
         <div className="hidden lg:block">
-          <Sidebar />
+          <Sidebar 
+            onAddContact={handleAddContact}
+            onImportCSV={handleImportCSV}
+          />
         </div>
         
         {/* Mobile Menu Button */}

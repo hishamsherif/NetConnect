@@ -271,8 +271,14 @@ export default function ContactTable({ onContactSelect }: ContactTableProps) {
                           {contact.firstName.charAt(0)}{contact.lastName.charAt(0)}
                         </AvatarFallback>
                       </Avatar>
-                      <div>
-                        <div className="font-semibold text-gray-900 text-base" data-testid={`text-contact-name-${contact.id}`}>
+                      <div 
+                        className="cursor-pointer hover:text-blue-600 transition-colors duration-200"
+                        onClick={() => {
+                          console.log("Contact selected:", contact.firstName, contact.lastName);
+                          onContactSelect?.(contact);
+                        }}
+                      >
+                        <div className="font-semibold text-gray-900 text-base hover:text-blue-600" data-testid={`text-contact-name-${contact.id}`}>
                           {contact.firstName} {contact.lastName}
                         </div>
                         <div className="text-sm text-gray-600" data-testid={`text-contact-email-${contact.id}`}>
