@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { 
   Table, 
   TableBody, 
@@ -19,6 +19,7 @@ import MobileContactCard from "./mobile-contact-card";
 import type { ContactWithRelations } from "@shared/schema";
 import { formatDistanceToNow } from "date-fns";
 import AddInteractionModal from "./add-interaction-modal";
+import { useLocation } from "wouter";
 
 interface ContactTableProps {
   onContactSelect?: (contact: ContactWithRelations) => void;
@@ -26,12 +27,29 @@ interface ContactTableProps {
 
 export default function ContactTable({ onContactSelect }: ContactTableProps) {
   const { data: contacts, isLoading } = useContacts();
+  const [location, setLocation] = useLocation();
   const [selectedContacts, setSelectedContacts] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [categoryFilter, setCategoryFilter] = useState<string>("all");
   const [strengthFilter, setStrengthFilter] = useState<string>("all");
   const [selectedContact, setSelectedContact] = useState<ContactWithRelations | null>(null);
   const [showInteractionModal, setShowInteractionModal] = useState(false);
+
+  // Handle URL parameters for filtering
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const strength = urlParams.get('strength');
+    const dormant = urlParams.get('dormant');
+    
+    if (strength) {
+      setStrengthFilter(strength);
+    }
+    
+    if (dormant === 'true') {
+      // Filter for dormant contacts (no interactions in 30+ days)
+      setStrengthFilter('dormant');
+    }
+  }, [location]);
 
   const filteredContacts = contacts?.filter(contact => {
     const matchesSearch = !searchQuery || 
@@ -42,10 +60,23 @@ export default function ContactTable({ onContactSelect }: ContactTableProps) {
 
     const matchesCategory = categoryFilter === "all" || contact.category === categoryFilter;
     
-    const matchesStrength = strengthFilter === "all" || 
-      (strengthFilter === "strong" && (contact.relationshipStrength || 0) >= 4) ||
-      (strengthFilter === "medium" && (contact.relationshipStrength || 0) === 3) ||
-      (strengthFilter === "weak" && (contact.relationshipStrength || 0) <= 2);
+    let matchesStrength = true;
+    if (strengthFilter === "strong") {
+      matchesStrength = (contact.relationshipStrength || 0) >= 4;
+    } else if (strengthFilter === "medium") {
+      matchesStrength = (contact.relationshipStrength || 0) === 3;
+    } else if (strengthFilter === "weak") {
+      matchesStrength = (contact.relationshipStrength || 0) <= 2;
+    } else if (strengthFilter === "dormant") {
+      // Dormant contacts: no interactions in 30+ days
+      if (!contact.interactions || contact.interactions.length === 0) {
+        matchesStrength = true;
+      } else {
+        const lastInteraction = new Date(contact.interactions[0].createdAt || new Date());
+        const daysSince = (Date.now() - lastInteraction.getTime()) / (1000 * 60 * 60 * 24);
+        matchesStrength = daysSince > 30;
+      }
+    }
 
     return matchesSearch && matchesCategory && matchesStrength;
   }) || [];
@@ -67,15 +98,15 @@ export default function ContactTable({ onContactSelect }: ContactTableProps) {
   };
 
   const getCategoryColor = (category: string) => {
-    switch (category) {
-      case "work": return "bg-black text-white border-black";
-      case "client": return "bg-black text-white border-black";
-      case "prospect": return "bg-black text-white border-black";
-      case "family": return "bg-black text-white border-black";
-      case "friend": return "bg-black text-white border-black";
-      case "mentor": return "bg-black text-white border-black";
-      default: return "bg-black text-white border-black";
-    }
+    const colors = {
+      work: "bg-blue-50 text-blue-700 border-blue-200",
+      client: "bg-green-50 text-green-700 border-green-200",
+      prospect: "bg-purple-50 text-purple-700 border-purple-200",
+      family: "bg-pink-50 text-pink-700 border-pink-200",
+      friend: "bg-yellow-50 text-yellow-700 border-yellow-200",
+      mentor: "bg-indigo-50 text-indigo-700 border-indigo-200",
+    };
+    return colors[category as keyof typeof colors] || "bg-gray-50 text-gray-700 border-gray-200";
   };
 
   const renderStars = (strength: number) => {
@@ -83,7 +114,7 @@ export default function ContactTable({ onContactSelect }: ContactTableProps) {
       <Star
         key={i}
         className={`h-4 w-4 ${
-          i < strength ? "text-black fill-current" : "text-gray-300"
+          i < strength ? "text-yellow-400 fill-current" : "text-gray-200"
         }`}
       />
     ));
@@ -99,44 +130,46 @@ export default function ContactTable({ onContactSelect }: ContactTableProps) {
 
   if (isLoading) {
     return (
-      <div className="bg-white border-2 border-black p-8">
-        <div className="text-center">
-          <div className="w-8 h-8 border-4 border-black border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-black font-bold text-lg">LOADING CONTACTS...</p>
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="bg-white border border-gray-200 rounded-2xl p-12 shadow-sm">
+          <div className="text-center">
+            <div className="w-8 h-8 border-2 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-6"></div>
+            <p className="text-lg font-medium text-gray-600">Loading contacts...</p>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="space-y-6">
+    <div className="max-w-7xl mx-auto px-6 space-y-8">
       {/* Filters and Search */}
-      <div className="bg-white border-2 border-black p-6">
-        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 mb-6">
+      <div className="bg-white border border-gray-200 rounded-2xl p-8 shadow-sm">
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 mb-8">
           <div>
-            <h3 className="text-2xl font-black text-black mb-2 uppercase tracking-wider">CONTACT MANAGEMENT</h3>
-            <p className="text-lg font-bold text-black">
+            <h3 className="text-3xl font-bold text-gray-900 mb-3">Contact Management</h3>
+            <p className="text-lg text-gray-600">
               {filteredContacts.length} of {contacts?.length || 0} contacts
             </p>
           </div>
           
           {selectedContacts.length > 0 && (
-            <Badge variant="secondary" className="px-4 py-2 text-lg font-bold bg-black text-white border-2 border-black rounded-none">
-              {selectedContacts.length} SELECTED
+            <Badge variant="secondary" className="px-4 py-2 text-base font-medium bg-blue-50 text-blue-700 border border-blue-200 rounded-full">
+              {selectedContacts.length} selected
             </Badge>
           )}
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           {/* Search */}
           <div className="lg:col-span-2">
             <div className="relative">
-              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-6 w-6 text-black" />
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
               <Input
-                placeholder="SEARCH BY NAME, COMPANY, OR TITLE..."
+                placeholder="Search by name, company, or title..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-12 pr-4 py-4 border-2 border-black focus:border-black focus:ring-0 text-lg font-bold rounded-none"
+                className="pl-12 pr-4 py-4 border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 rounded-xl text-base transition-all duration-200"
                 data-testid="input-search-table"
               />
             </div>
@@ -144,29 +177,30 @@ export default function ContactTable({ onContactSelect }: ContactTableProps) {
           
           {/* Filters */}
           <Select value={categoryFilter} onValueChange={setCategoryFilter}>
-            <SelectTrigger className="border-2 border-black focus:border-black focus:ring-0 rounded-none py-4 text-lg font-bold">
-              <SelectValue placeholder="ALL CATEGORIES" />
+            <SelectTrigger className="border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 rounded-xl py-4 text-base">
+              <SelectValue placeholder="All Categories" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">ALL CATEGORIES</SelectItem>
-              <SelectItem value="work">WORK</SelectItem>
-              <SelectItem value="client">CLIENTS</SelectItem>
-              <SelectItem value="prospect">PROSPECTS</SelectItem>
-              <SelectItem value="family">FAMILY</SelectItem>
-              <SelectItem value="friend">FRIENDS</SelectItem>
-              <SelectItem value="mentor">MENTORS</SelectItem>
+              <SelectItem value="all">All Categories</SelectItem>
+              <SelectItem value="work">Work</SelectItem>
+              <SelectItem value="client">Clients</SelectItem>
+              <SelectItem value="prospect">Prospects</SelectItem>
+              <SelectItem value="family">Family</SelectItem>
+              <SelectItem value="friend">Friends</SelectItem>
+              <SelectItem value="mentor">Mentors</SelectItem>
             </SelectContent>
           </Select>
           
           <Select value={strengthFilter} onValueChange={setStrengthFilter}>
-            <SelectTrigger className="border-2 border-black focus:border-black focus:ring-0 rounded-none py-4 text-lg font-bold">
-              <SelectValue placeholder="ALL STRENGTHS" />
+            <SelectTrigger className="border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 rounded-xl py-4 text-base">
+              <SelectValue placeholder="All Strengths" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">ALL STRENGTHS</SelectItem>
-              <SelectItem value="strong">STRONG (4-5)</SelectItem>
-              <SelectItem value="medium">MEDIUM (3)</SelectItem>
-              <SelectItem value="weak">WEAK (1-2)</SelectItem>
+              <SelectItem value="all">All Strengths</SelectItem>
+              <SelectItem value="strong">Strong (4-5)</SelectItem>
+              <SelectItem value="medium">Medium (3)</SelectItem>
+              <SelectItem value="weak">Weak (1-2)</SelectItem>
+              <SelectItem value="dormant">Dormant (30+ days)</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -188,58 +222,60 @@ export default function ContactTable({ onContactSelect }: ContactTableProps) {
             />
           ))}
           {filteredContacts.length === 0 && (
-            <div className="text-center py-12 bg-white border-2 border-black">
-              <p className="text-2xl font-black text-black uppercase">NO CONTACTS FOUND</p>
+            <div className="text-center py-16 bg-white border border-gray-200 rounded-2xl">
+              <div className="text-6xl mb-4">🔍</div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">No contacts found</h3>
+              <p className="text-gray-600">Try adjusting your search or filters</p>
             </div>
           )}
         </div>
       </div>
 
       {/* Desktop Table View */}
-      <div className="hidden lg:block bg-white border-2 border-black overflow-hidden">
+      <div className="hidden lg:block bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm">
         <div className="overflow-x-auto">
           <Table>
             <TableHeader>
-              <TableRow className="bg-black hover:bg-black">
+              <TableRow className="bg-gray-50 hover:bg-gray-50">
                 <TableHead className="w-16 p-6">
                   <Checkbox
                     checked={selectedContacts.length === filteredContacts.length && filteredContacts.length > 0}
                     onCheckedChange={handleSelectAll}
                     data-testid="checkbox-select-all"
-                    className="border-2 border-white data-[state=checked]:bg-white data-[state=checked]:text-black"
+                    className="border border-gray-300 data-[state=checked]:bg-blue-500 data-[state=checked]:border-blue-500 rounded-md"
                   />
                 </TableHead>
-                <TableHead className="p-6 font-black text-white text-lg uppercase tracking-wider">CONTACT</TableHead>
-                <TableHead className="p-6 font-black text-white text-lg uppercase tracking-wider">COMPANY</TableHead>
-                <TableHead className="p-6 font-black text-white text-lg uppercase tracking-wider">CATEGORY</TableHead>
-                <TableHead className="p-6 font-black text-white text-lg uppercase tracking-wider">STRENGTH</TableHead>
-                <TableHead className="p-6 font-black text-white text-lg uppercase tracking-wider">LAST CONTACT</TableHead>
-                <TableHead className="p-6 font-black text-white text-lg uppercase tracking-wider">ACTIONS</TableHead>
+                <TableHead className="p-6 font-semibold text-gray-900 text-base">Contact</TableHead>
+                <TableHead className="p-6 font-semibold text-gray-900 text-base">Company</TableHead>
+                <TableHead className="p-6 font-semibold text-gray-900 text-base">Category</TableHead>
+                <TableHead className="p-6 font-semibold text-gray-900 text-base">Strength</TableHead>
+                <TableHead className="p-6 font-semibold text-gray-900 text-base">Last Contact</TableHead>
+                <TableHead className="p-6 font-semibold text-gray-900 text-base">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {filteredContacts.map((contact) => (
-                <TableRow key={contact.id} className="hover:bg-gray-100 border-b-2 border-black">
+                <TableRow key={contact.id} className="hover:bg-gray-50 border-b border-gray-100">
                   <TableCell className="p-6">
                     <Checkbox
                       checked={selectedContacts.includes(contact.id)}
                       onCheckedChange={(checked) => handleSelectContact(contact.id, checked as boolean)}
                       data-testid={`checkbox-contact-${contact.id}`}
-                      className="border-2 border-black data-[state=checked]:bg-black data-[state=checked]:text-white"
+                      className="border border-gray-300 data-[state=checked]:bg-blue-500 data-[state=checked]:border-blue-500 rounded-md"
                     />
                   </TableCell>
                   <TableCell className="p-6">
                     <div className="flex items-center space-x-4">
-                      <Avatar className="h-12 w-12 border-2 border-black rounded-none">
-                        <AvatarFallback className="bg-black text-white font-black text-lg border-2 border-black rounded-none">
+                      <Avatar className="h-12 w-12 border border-gray-200">
+                        <AvatarFallback className="bg-blue-50 text-blue-600 font-semibold text-lg rounded-xl">
                           {contact.firstName.charAt(0)}{contact.lastName.charAt(0)}
                         </AvatarFallback>
                       </Avatar>
                       <div>
-                        <div className="font-black text-black text-lg" data-testid={`text-contact-name-${contact.id}`}>
+                        <div className="font-semibold text-gray-900 text-base" data-testid={`text-contact-name-${contact.id}`}>
                           {contact.firstName} {contact.lastName}
                         </div>
-                        <div className="text-base text-black font-bold" data-testid={`text-contact-email-${contact.id}`}>
+                        <div className="text-sm text-gray-600" data-testid={`text-contact-email-${contact.id}`}>
                           {contact.email}
                         </div>
                       </div>
@@ -247,20 +283,20 @@ export default function ContactTable({ onContactSelect }: ContactTableProps) {
                   </TableCell>
                   <TableCell className="p-6">
                     <div>
-                      <div className="font-black text-black text-lg" data-testid={`text-contact-company-${contact.id}`}>
+                      <div className="font-medium text-gray-900 text-base" data-testid={`text-contact-company-${contact.id}`}>
                         {contact.company || "—"}
                       </div>
-                      <div className="text-base text-black font-bold" data-testid={`text-contact-title-${contact.id}`}>
+                      <div className="text-sm text-gray-600" data-testid={`text-contact-title-${contact.id}`}>
                         {contact.title || "—"}
                       </div>
                     </div>
                   </TableCell>
                   <TableCell className="p-6">
                     <Badge 
-                      className={`px-4 py-2 text-base font-black border-2 rounded-none ${getCategoryColor(contact.category)}`}
+                      className={`px-3 py-1.5 text-sm font-medium border rounded-full ${getCategoryColor(contact.category)}`}
                       data-testid={`badge-category-${contact.id}`}
                     >
-                      {contact.category.toUpperCase()}
+                      {contact.category}
                     </Badge>
                   </TableCell>
                   <TableCell className="p-6">
@@ -268,12 +304,12 @@ export default function ContactTable({ onContactSelect }: ContactTableProps) {
                       <div className="flex space-x-1">
                         {renderStars(contact.relationshipStrength || 1)}
                       </div>
-                      <span className="text-lg font-black text-black ml-2" data-testid={`text-strength-${contact.id}`}>
+                      <span className="text-sm font-medium text-gray-700 ml-2" data-testid={`text-strength-${contact.id}`}>
                         {contact.relationshipStrength || 1}
                       </span>
                     </div>
                   </TableCell>
-                  <TableCell className="p-6 text-lg font-bold text-black" data-testid={`text-last-contact-${contact.id}`}>
+                  <TableCell className="p-6 text-sm text-gray-600" data-testid={`text-last-contact-${contact.id}`}>
                     {getLastContactTime(contact)}
                   </TableCell>
                   <TableCell className="p-6">
@@ -285,7 +321,7 @@ export default function ContactTable({ onContactSelect }: ContactTableProps) {
                           console.log("View contact:", contact.firstName, contact.lastName);
                           onContactSelect?.(contact);
                         }}
-                        className="h-10 w-10 p-0 hover:bg-black hover:text-white border-2 border-black rounded-none"
+                        className="h-10 w-10 p-0 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors"
                         data-testid={`button-view-${contact.id}`}
                       >
                         <Eye className="h-5 w-5" />
@@ -296,7 +332,7 @@ export default function ContactTable({ onContactSelect }: ContactTableProps) {
                         onClick={() => {
                           console.log("Edit contact:", contact.firstName, contact.lastName);
                         }}
-                        className="h-10 w-10 p-0 hover:bg-black hover:text-white border-2 border-black rounded-none"
+                        className="h-10 w-10 p-0 hover:bg-green-50 hover:text-green-600 rounded-lg transition-colors"
                         data-testid={`button-edit-${contact.id}`}
                       >
                         <Edit className="h-5 w-5" />
@@ -309,7 +345,7 @@ export default function ContactTable({ onContactSelect }: ContactTableProps) {
                           setSelectedContact(contact);
                           setShowInteractionModal(true);
                         }}
-                        className="h-10 w-10 p-0 hover:bg-black hover:text-white border-2 border-black rounded-none"
+                        className="h-10 w-10 p-0 hover:bg-purple-50 hover:text-purple-600 rounded-lg transition-colors"
                         data-testid={`button-add-interaction-${contact.id}`}
                       >
                         <Plus className="h-5 w-5" />
@@ -323,19 +359,19 @@ export default function ContactTable({ onContactSelect }: ContactTableProps) {
         </div>
         
         {/* Pagination */}
-        <div className="flex items-center justify-between px-6 py-6 border-t-2 border-black bg-gray-100">
-          <div className="text-lg font-bold text-black">
-            SHOWING <span className="font-black">1</span> TO <span className="font-black">{filteredContacts.length}</span> OF <span className="font-black">{filteredContacts.length}</span> CONTACTS
+        <div className="flex items-center justify-between px-8 py-6 border-t border-gray-200 bg-gray-50">
+          <div className="text-base text-gray-600">
+            Showing <span className="font-semibold">1</span> to <span className="font-semibold">{filteredContacts.length}</span> of <span className="font-semibold">{filteredContacts.length}</span> contacts
           </div>
           <div className="flex items-center space-x-3">
-            <Button variant="outline" size="sm" disabled className="px-6 py-3 border-2 border-black rounded-none font-bold text-lg">
-              PREVIOUS
+            <Button variant="outline" size="sm" disabled className="px-4 py-2 border border-gray-200 rounded-lg font-medium">
+              Previous
             </Button>
-            <Button size="sm" className="bg-black text-white px-6 py-3 border-2 border-black rounded-none font-bold text-lg">
+            <Button size="sm" className="bg-blue-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-600">
               1
             </Button>
-            <Button variant="outline" size="sm" className="px-6 py-3 border-2 border-black rounded-none font-bold text-lg">
-              NEXT
+            <Button variant="outline" size="sm" className="px-4 py-2 border border-gray-200 rounded-lg font-medium">
+              Next
             </Button>
           </div>
         </div>
