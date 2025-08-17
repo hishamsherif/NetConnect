@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Route, Switch } from 'wouter';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { Toaster } from './components/ui/toaster';
+import { Toaster } from '@/components/ui/toaster';
 import Layout from './components/layout/layout';
 import Dashboard from './pages/dashboard';
 import Contacts from './pages/contacts';
