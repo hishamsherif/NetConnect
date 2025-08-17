@@ -1,6 +1,7 @@
 import { Users, BarChart3, Network, Settings, Plus, Upload } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Logo } from "@/components/ui/logo";
 import { useLocation } from "wouter";
 import { useContacts } from "@/hooks/use-contacts";
 import { useAnalytics } from "@/hooks/use-interactions";
@@ -64,13 +65,10 @@ export default function Sidebar({ onAddContact, onImportCSV }: SidebarProps) {
       {/* Header */}
       <div className="p-8 border-b border-gray-200">
         <div className="flex items-center space-x-3 mb-6">
-          <div className="w-10 h-10 bg-blue-500 rounded-2xl flex items-center justify-center">
-            <Network className="h-6 w-6 text-white" />
-          </div>
-          <div>
-            <h1 className="text-2xl font-bold text-gray-900">NetworkTracker</h1>
-            <p className="text-sm text-gray-600">Professional Network Management</p>
-          </div>
+          <Logo size="lg" />
+        </div>
+        <div className="mb-6">
+          <p className="text-sm text-gray-600">Professional Network Management</p>
         </div>
         
         {/* Quick Stats */}
@@ -180,7 +178,7 @@ export default function Sidebar({ onAddContact, onImportCSV }: SidebarProps) {
       <div className="p-6 border-t border-gray-200 mt-auto">
         <div className="text-center">
           <p className="text-xs text-gray-500">
-            NetworkTracker v1.0.0
+            Nodal v1.0.0
           </p>
           <p className="text-xs text-gray-400 mt-1">
             Professional Network Management
