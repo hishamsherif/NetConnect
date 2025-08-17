@@ -4,7 +4,6 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Logo } from "@/components/ui/logo";
 import { useSearchContacts } from "@/hooks/use-contacts";
 import { useLocation } from "wouter";
 
@@ -33,7 +32,10 @@ export default function TopNav({ onMobileMenuClick }: TopNavProps) {
           </Button>
           
           <div className="flex items-center space-x-3">
-            <Logo size="md" />
+            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+              <i className="fas fa-network-wired text-white text-sm"></i>
+            </div>
+            <h1 className="text-lg lg:text-xl font-semibold text-neutral-800">NetworkTracker</h1>
           </div>
         </div>
         

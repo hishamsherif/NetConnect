@@ -2,7 +2,6 @@ import { Link, useLocation } from "wouter";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Logo } from "@/components/ui/logo";
 import { 
   BarChart3, 
   Users, 
@@ -58,7 +57,7 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
       {/* Mobile Navigation Panel */}
       <div className="fixed top-0 left-0 h-full w-80 bg-white border-r border-neutral-200 z-50 lg:hidden transform transition-transform duration-300 ease-in-out">
         <div className="flex items-center justify-between p-6 border-b border-neutral-200">
-          <Logo size="md" />
+          <h2 className="text-lg font-semibold text-neutral-800">Navigation</h2>
           <Button
             variant="ghost"
             size="sm"
