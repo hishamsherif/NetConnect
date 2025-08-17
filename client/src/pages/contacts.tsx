@@ -55,7 +55,6 @@ export default function Contacts() {
             onClick={() => {
               console.log("Export button clicked");
               // TODO: Implement export functionality
-              alert("Export functionality coming soon!");
             }}
             data-testid="button-export-contacts"
           >
@@ -164,24 +163,18 @@ export default function Contacts() {
                   variant="outline"
                   onClick={() => {
                     console.log("Edit contact:", selectedContact.firstName, selectedContact.lastName);
-                    // Navigate to edit page
-                    window.location.href = `/contacts/${selectedContact.id}/edit`;
+                    // TODO: Implement edit functionality
                   }}
                   className="border-gray-300 hover:bg-gray-50"
-                  data-testid="button-edit-contact-modal"
                 >
                   Edit Contact
                 </Button>
                 <Button
                   onClick={() => {
                     console.log("Add interaction for:", selectedContact.firstName, selectedContact.lastName);
-                    // Close modal and open add interaction modal
-                    setSelectedContact(null);
-                    // TODO: Open add interaction modal
-                    alert("Add interaction functionality coming soon!");
+                    // TODO: Implement add interaction functionality
                   }}
                   className="bg-blue-500 hover:bg-blue-600"
-                  data-testid="button-add-interaction-modal"
                 >
                   Add Interaction
                 </Button>

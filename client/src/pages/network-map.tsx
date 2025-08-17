@@ -19,7 +19,6 @@ export default function NetworkMap() {
             onClick={() => {
               console.log("Export network clicked");
               // TODO: Implement network export
-              alert("Network export functionality coming soon!");
             }}
             data-testid="button-export-network"
           >
@@ -31,7 +30,6 @@ export default function NetworkMap() {
             onClick={() => {
               console.log("Network settings clicked");
               // TODO: Implement network settings
-              alert("Network settings functionality coming soon!");
             }}
             data-testid="button-settings"
           >
@@ -53,7 +51,6 @@ export default function NetworkMap() {
                 onClick={() => {
                   console.log("Filter by category clicked");
                   // TODO: Implement category filtering
-                  alert("Category filtering functionality coming soon!");
                 }}
                 data-testid="button-filter-category"
               >
@@ -66,7 +63,6 @@ export default function NetworkMap() {
                 onClick={() => {
                   console.log("Filter by strength clicked");
                   // TODO: Implement strength filtering
-                  alert("Strength filtering functionality coming soon!");
                 }}
                 data-testid="button-filter-strength"
               >
@@ -79,7 +75,6 @@ export default function NetworkMap() {
                 onClick={() => {
                   console.log("Filter by company clicked");
                   // TODO: Implement company filtering
-                  alert("Company filtering functionality coming soon!");
                 }}
                 data-testid="button-filter-company"
               >

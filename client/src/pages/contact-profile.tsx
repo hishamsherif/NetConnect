@@ -6,8 +6,6 @@ import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { 
   ArrowLeft, 
   Mail, 
@@ -19,9 +17,7 @@ import {
   Building,
   User,
   Star,
-  Clock,
-  Save,
-  X
+  Clock
 } from "lucide-react";
 import { useContact } from "@/hooks/use-contacts";
 import { useInteractions } from "@/hooks/use-interactions";
@@ -33,37 +29,9 @@ export default function ContactProfile() {
   const { id } = useParams<{ id: string }>();
   const [, setLocation] = useLocation();
   const [showAddInteraction, setShowAddInteraction] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
-  const [isEditingNotes, setIsEditingNotes] = useState(false);
-  const [editForm, setEditForm] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    company: "",
-    title: "",
-    location: "",
-    notes: ""
-  });
   
   const { data: contact, isLoading: contactLoading } = useContact(id!);
   const { data: interactions, isLoading: interactionsLoading } = useInteractions(id);
-
-  // Initialize edit form when contact loads
-  useEffect(() => {
-    if (contact) {
-      setEditForm({
-        firstName: contact.firstName || "",
-        lastName: contact.lastName || "",
-        email: contact.email || "",
-        phone: contact.phone || "",
-        company: contact.company || "",
-        title: contact.title || "",
-        location: contact.location || "",
-        notes: contact.notes || ""
-      });
-    }
-  }, [contact]);
 
   if (contactLoading) {
     return (
@@ -111,45 +79,6 @@ export default function ContactProfile() {
     return "Weak";
   };
 
-  const handleSaveEdit = () => {
-    console.log("Saving contact edits:", editForm);
-    // TODO: Implement actual save functionality
-    alert("Contact updated successfully! (Save functionality coming soon)");
-    setIsEditing(false);
-  };
-
-  const handleSaveNotes = () => {
-    console.log("Saving notes:", editForm.notes);
-    // TODO: Implement actual save functionality
-    alert("Notes updated successfully! (Save functionality coming soon)");
-    setIsEditingNotes(false);
-  };
-
-  const handleCancelEdit = () => {
-    // Reset form to original values
-    if (contact) {
-      setEditForm({
-        firstName: contact.firstName || "",
-        lastName: contact.lastName || "",
-        email: contact.email || "",
-        phone: contact.phone || "",
-        company: contact.company || "",
-        title: contact.title || "",
-        location: contact.location || "",
-        notes: contact.notes || ""
-      });
-    }
-    setIsEditing(false);
-  };
-
-  const handleCancelNotes = () => {
-    // Reset notes to original value
-    if (contact) {
-      setEditForm(prev => ({ ...prev, notes: contact.notes || "" }));
-    }
-    setIsEditingNotes(false);
-  };
-
   return (
     <div className="max-w-4xl mx-auto p-6">
       {/* Header */}
@@ -178,164 +107,82 @@ export default function ContactProfile() {
                 </AvatarFallback>
               </Avatar>
               
-              {isEditing ? (
-                <div className="space-y-3 text-left">
-                  <div className="grid grid-cols-2 gap-2">
-                    <Input
-                      value={editForm.firstName}
-                      onChange={(e) => setEditForm(prev => ({ ...prev, firstName: e.target.value }))}
-                      placeholder="First Name"
-                      className="text-sm"
-                    />
-                    <Input
-                      value={editForm.lastName}
-                      onChange={(e) => setEditForm(prev => ({ ...prev, lastName: e.target.value }))}
-                      placeholder="Last Name"
-                      className="text-sm"
-                    />
-                  </div>
-                  <Input
-                    value={editForm.title}
-                    onChange={(e) => setEditForm(prev => ({ ...prev, title: e.target.value }))}
-                    placeholder="Job Title"
-                    className="text-sm"
-                  />
-                  <Input
-                    value={editForm.company}
-                    onChange={(e) => setEditForm(prev => ({ ...prev, company: e.target.value }))}
-                    placeholder="Company"
-                    className="text-sm"
-                  />
-                  <Input
-                    value={editForm.email}
-                    onChange={(e) => setEditForm(prev => ({ ...prev, email: e.target.value }))}
-                    placeholder="Email"
-                    className="text-sm"
-                  />
-                  <Input
-                    value={editForm.phone}
-                    onChange={(e) => setEditForm(prev => ({ ...prev, phone: e.target.value }))}
-                    placeholder="Phone"
-                    className="text-sm"
-                  />
-                  <Input
-                    value={editForm.location}
-                    onChange={(e) => setEditForm(prev => ({ ...prev, location: e.target.value }))}
-                    placeholder="Location"
-                    className="text-sm"
-                  />
-                </div>
-              ) : (
-                <>
-                  <h2 className="text-xl font-bold text-gray-800 mb-1">
-                    {contact.firstName} {contact.lastName}
-                  </h2>
-                  
-                  {contact.title && (
-                    <p className="text-gray-600 mb-1">{contact.title}</p>
-                  )}
-                  
-                  {contact.company && (
-                    <p className="text-gray-500 mb-4 flex items-center justify-center gap-1">
-                      <Building className="h-4 w-4" />
-                      {contact.company}
-                    </p>
-                  )}
-
-                  <div className="flex justify-center gap-2 mb-4">
-                    <Badge className={`${getRelationshipColor(contact.relationshipStrength || 1)} border-0`}>
-                      <Star className="h-3 w-3 mr-1" />
-                      {getRelationshipText(contact.relationshipStrength || 1)}
-                    </Badge>
-                    {contact.category && (
-                      <Badge variant="outline" className="capitalize">
-                        {contact.category}
-                      </Badge>
-                    )}
-                  </div>
-
-                  <Separator className="my-4" />
-
-                  <div className="space-y-3 text-left">
-                    {contact.email && (
-                      <div className="flex items-center gap-3">
-                        <Mail className="h-4 w-4 text-gray-400" />
-                        <span className="text-sm text-gray-600">{contact.email}</span>
-                      </div>
-                    )}
-                    
-                    {contact.phone && (
-                      <div className="flex items-center gap-3">
-                        <Phone className="h-4 w-4 text-gray-400" />
-                        <span className="text-sm text-gray-600">{contact.phone}</span>
-                      </div>
-                    )}
-                    
-                    {contact.location && (
-                      <div className="flex items-center gap-3">
-                        <MapPin className="h-4 w-4 text-gray-400" />
-                        <span className="text-sm text-gray-600">{contact.location}</span>
-                      </div>
-                    )}
-                    
-                    <div className="flex items-center gap-3">
-                      <Calendar className="h-4 w-4 text-gray-400" />
-                      <span className="text-sm text-gray-600">
-                        Added {contact.createdAt ? formatDistanceToNow(new Date(contact.createdAt), { addSuffix: true }) : 'recently'}
-                      </span>
-                    </div>
-                  </div>
-                </>
+              <h2 className="text-xl font-bold text-gray-800 mb-1">
+                {contact.firstName} {contact.lastName}
+              </h2>
+              
+              {contact.title && (
+                <p className="text-gray-600 mb-1">{contact.title}</p>
               )}
+              
+              {contact.company && (
+                <p className="text-gray-500 mb-4 flex items-center justify-center gap-1">
+                  <Building className="h-4 w-4" />
+                  {contact.company}
+                </p>
+              )}
+
+              <div className="flex justify-center gap-2 mb-4">
+                <Badge className={`${getRelationshipColor(contact.relationshipStrength || 1)} border-0`}>
+                  <Star className="h-3 w-3 mr-1" />
+                  {getRelationshipText(contact.relationshipStrength || 1)}
+                </Badge>
+                {contact.category && (
+                  <Badge variant="outline" className="capitalize">
+                    {contact.category}
+                  </Badge>
+                )}
+              </div>
+
+              <Separator className="my-4" />
+
+              <div className="space-y-3 text-left">
+                {contact.email && (
+                  <div className="flex items-center gap-3">
+                    <Mail className="h-4 w-4 text-gray-400" />
+                    <span className="text-sm text-gray-600">{contact.email}</span>
+                  </div>
+                )}
+                
+                {contact.phone && (
+                  <div className="flex items-center gap-3">
+                    <Phone className="h-4 w-4 text-gray-400" />
+                    <span className="text-sm text-gray-600">{contact.phone}</span>
+                  </div>
+                )}
+                
+                {contact.location && (
+                  <div className="flex items-center gap-3">
+                    <MapPin className="h-4 w-4 text-gray-400" />
+                    <span className="text-sm text-gray-600">{contact.location}</span>
+                  </div>
+                )}
+                
+                <div className="flex items-center gap-3">
+                  <Calendar className="h-4 w-4 text-gray-400" />
+                  <span className="text-sm text-gray-600">
+                    Added {contact.createdAt ? formatDistanceToNow(new Date(contact.createdAt), { addSuffix: true }) : 'recently'}
+                  </span>
+                </div>
+              </div>
 
               <Separator className="my-4" />
 
               <div className="flex gap-2">
-                {isEditing ? (
-                  <>
-                    <Button 
-                      size="sm" 
-                      className="flex-1"
-                      onClick={handleSaveEdit}
-                      data-testid="button-save-contact"
-                    >
-                      <Save className="h-4 w-4 mr-2" />
-                      Save
-                    </Button>
-                    <Button 
-                      size="sm" 
-                      variant="outline" 
-                      className="flex-1"
-                      onClick={handleCancelEdit}
-                      data-testid="button-cancel-edit"
-                    >
-                      <X className="h-4 w-4 mr-2" />
-                      Cancel
-                    </Button>
-                  </>
-                ) : (
-                  <>
-                    <Button 
-                      size="sm" 
-                      className="flex-1"
-                      onClick={() => setIsEditing(true)}
-                      data-testid="button-edit-contact"
-                    >
-                      <Edit className="h-4 w-4 mr-2" />
-                      Edit
-                    </Button>
-                    <Button 
-                      size="sm" 
-                      variant="outline" 
-                      className="flex-1"
-                      onClick={() => setShowAddInteraction(true)}
-                      data-testid="button-add-interaction"
-                    >
-                      <MessageSquare className="h-4 w-4 mr-2" />
-                      Log Interaction
-                    </Button>
-                  </>
-                )}
+                <Button size="sm" className="flex-1">
+                  <Edit className="h-4 w-4 mr-2" />
+                  Edit
+                </Button>
+                <Button 
+                  size="sm" 
+                  variant="outline" 
+                  className="flex-1"
+                  onClick={() => setShowAddInteraction(true)}
+                  data-testid="button-add-interaction"
+                >
+                  <MessageSquare className="h-4 w-4 mr-2" />
+                  Log Interaction
+                </Button>
               </div>
             </CardContent>
           </Card>
@@ -416,65 +263,16 @@ export default function ContactProfile() {
             <TabsContent value="notes" className="space-y-4">
               <Card>
                 <CardHeader>
-                  <CardTitle className="flex items-center justify-between">
-                    <span>Notes</span>
-                    {contact.notes && !isEditingNotes && (
-                      <Button 
-                        size="sm" 
-                        variant="outline"
-                        onClick={() => setIsEditingNotes(true)}
-                        data-testid="button-edit-notes"
-                      >
-                        <Edit className="h-4 w-4 mr-2" />
-                        Edit Notes
-                      </Button>
-                    )}
-                  </CardTitle>
+                  <CardTitle>Notes</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  {isEditingNotes ? (
-                    <div className="space-y-4">
-                      <Textarea
-                        value={editForm.notes}
-                        onChange={(e) => setEditForm(prev => ({ ...prev, notes: e.target.value }))}
-                        placeholder="Add notes about this contact..."
-                        rows={4}
-                        className="w-full"
-                      />
-                      <div className="flex gap-2 justify-end">
-                        <Button 
-                          size="sm" 
-                          onClick={handleSaveNotes}
-                          data-testid="button-save-notes"
-                        >
-                          <Save className="h-4 w-4 mr-2" />
-                          Save Notes
-                        </Button>
-                        <Button 
-                          size="sm" 
-                          variant="outline"
-                          onClick={handleCancelNotes}
-                          data-testid="button-cancel-notes"
-                        >
-                          <X className="h-4 w-4 mr-2" />
-                          Cancel
-                        </Button>
-                      </div>
-                    </div>
-                  ) : contact.notes ? (
-                    <div>
-                      <p className="text-gray-700 mb-4">{contact.notes}</p>
-                    </div>
+                  {contact.notes ? (
+                    <p className="text-gray-700">{contact.notes}</p>
                   ) : (
                     <div className="text-center py-8">
                       <User className="h-8 w-8 text-gray-400 mx-auto mb-2" />
                       <p className="text-gray-500">No notes added yet</p>
-                      <Button 
-                        size="sm" 
-                        className="mt-2"
-                        onClick={() => setIsEditingNotes(true)}
-                        data-testid="button-add-notes"
-                      >
+                      <Button size="sm" className="mt-2">
                         <Edit className="h-4 w-4 mr-2" />
                         Add Notes
                       </Button>

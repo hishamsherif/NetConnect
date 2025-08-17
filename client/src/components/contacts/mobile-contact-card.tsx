@@ -40,8 +40,7 @@ export default function MobileContactCard({ contact, onEdit, onDelete, onInterac
       data-testid={`mobile-contact-card-${contact.id}`}
       onClick={() => {
         console.log("Mobile contact card clicked:", contact.firstName, contact.lastName);
-        // Navigate to contact profile instead of just calling onEdit
-        window.location.href = `/contacts/${contact.id}`;
+        onView?.(contact);
       }}
     >
       <CardContent className="p-4">
@@ -118,8 +117,7 @@ export default function MobileContactCard({ contact, onEdit, onDelete, onInterac
                 <Button
                   size="sm"
                   variant="outline"
-                  onClick={(e) => {
-                    e.stopPropagation(); // Prevent card click
+                  onClick={() => {
                     console.log("Logging interaction for:", contact.firstName, contact.lastName);
                     setShowInteractionModal(true);
                   }}
@@ -135,11 +133,9 @@ export default function MobileContactCard({ contact, onEdit, onDelete, onInterac
                 <Button
                   size="sm"
                   variant="ghost"
-                  onClick={(e) => {
-                    e.stopPropagation(); // Prevent card click
+                  onClick={() => {
                     console.log("Editing contact:", contact.firstName, contact.lastName);
-                    // Navigate to edit page
-                    window.location.href = `/contacts/${contact.id}/edit`;
+                    onEdit?.(contact);
                   }}
                   className="h-8 w-8 p-0"
                   data-testid={`button-edit-${contact.id}`}
@@ -149,8 +145,7 @@ export default function MobileContactCard({ contact, onEdit, onDelete, onInterac
                 <Button
                   size="sm"
                   variant="ghost"
-                  onClick={(e) => {
-                    e.stopPropagation(); // Prevent card click
+                  onClick={() => {
                     console.log("Deleting contact:", contact.firstName, contact.lastName);
                     onDelete?.(contact);
                   }}

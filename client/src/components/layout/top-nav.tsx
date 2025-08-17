@@ -64,7 +64,7 @@ export default function TopNav({ onMobileMenuClick }: TopNavProps) {
                       className="p-3 hover:bg-neutral-50 cursor-pointer border-b border-neutral-100 last:border-b-0"
                       onClick={() => {
                         console.log(`Search result clicked: ${contact.firstName} ${contact.lastName}`);
-                        setLocation(`/contacts/${contact.id}`);
+                        setLocation('/contacts');
                         setSearchQuery(''); // Clear search
                       }}
                       data-testid={`search-result-${contact.id}`}
@@ -90,7 +90,6 @@ export default function TopNav({ onMobileMenuClick }: TopNavProps) {
             onClick={() => {
               // TODO: Implement mobile search modal
               console.log("Mobile search clicked");
-              alert("Mobile search functionality coming soon!");
             }}
             data-testid="button-mobile-search"
           >
@@ -104,7 +103,6 @@ export default function TopNav({ onMobileMenuClick }: TopNavProps) {
             onClick={() => {
               console.log("Notifications clicked");
               // TODO: Implement notifications
-              alert("Notifications functionality coming soon!");
             }}
             data-testid="button-notifications"
           >

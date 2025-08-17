@@ -41,15 +41,7 @@ export default function Dashboard() {
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
-                <div 
-                  className="flex items-center justify-between p-3 bg-amber-50 border border-amber-200 rounded-lg cursor-pointer hover:bg-amber-100 transition-colors"
-                  onClick={() => {
-                    console.log("Follow-up clicked: David Kim");
-                    // TODO: Navigate to contact profile or open follow-up modal
-                    alert("Follow-up functionality coming soon! This would open David Kim's profile or a follow-up modal.");
-                  }}
-                  data-testid="followup-david-kim"
-                >
+                <div className="flex items-center justify-between p-3 bg-amber-50 border border-amber-200 rounded-lg">
                   <div>
                     <h4 className="font-medium text-neutral-800">David Kim</h4>
                     <p className="text-sm text-neutral-600">Follow up on project proposal</p>
@@ -57,15 +49,7 @@ export default function Dashboard() {
                   <Badge className="bg-amber-100 text-amber-700">Today</Badge>
                 </div>
                 
-                <div 
-                  className="flex items-center justify-between p-3 border border-neutral-200 rounded-lg cursor-pointer hover:bg-neutral-50 transition-colors"
-                  onClick={() => {
-                    console.log("Follow-up clicked: Lisa Park");
-                    // TODO: Navigate to contact profile or open follow-up modal
-                    alert("Follow-up functionality coming soon! This would open Lisa Park's profile or a follow-up modal.");
-                  }}
-                  data-testid="followup-lisa-park"
-                >
+                <div className="flex items-center justify-between p-3 border border-neutral-200 rounded-lg">
                   <div>
                     <h4 className="font-medium text-neutral-800">Lisa Park</h4>
                     <p className="text-sm text-neutral-600">Schedule quarterly check-in</p>
@@ -94,7 +78,6 @@ export default function Dashboard() {
             onClick={() => {
               console.log("Export data clicked");
               // TODO: Implement export functionality
-              alert("Export functionality coming soon!");
             }}
             data-testid="button-export"
           >

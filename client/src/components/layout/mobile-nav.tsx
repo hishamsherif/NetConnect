@@ -122,7 +122,6 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
               onClick={() => {
                 console.log("Import CSV clicked");
                 // TODO: Implement CSV import
-                alert("CSV import functionality coming soon!");
               }}
               data-testid="mobile-button-import-csv"
             >

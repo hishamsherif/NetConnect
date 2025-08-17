@@ -57,7 +57,7 @@ export default function AddInteractionModal({ open, onOpenChange, contact }: Add
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-lg max-h-screen overflow-y-auto bg-white border border-gray-200 shadow-xl">
+      <DialogContent className="sm:max-w-lg max-h-screen overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Log Interaction</DialogTitle>
           <DialogDescription>
