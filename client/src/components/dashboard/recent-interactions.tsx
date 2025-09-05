@@ -76,10 +76,9 @@ export default function RecentInteractions() {
         <CardTitle>Recent Interactions</CardTitle>
         <button 
           onClick={() => {
-            console.log("View all interactions clicked");
             setLocation('/contacts');
           }}
-          className="text-primary text-sm hover:underline cursor-pointer" 
+          className="text-primary text-sm hover:underline cursor-pointer"
           data-testid="link-view-all-interactions"
         >
           View all

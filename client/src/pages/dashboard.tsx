@@ -76,7 +76,6 @@ export default function Dashboard() {
             size="sm" 
             className="flex-1 sm:flex-initial"
             onClick={() => {
-              console.log("Export data clicked");
               // TODO: Implement export functionality
             }}
             data-testid="button-export"

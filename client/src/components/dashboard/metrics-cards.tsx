@@ -92,7 +92,6 @@ export default function MetricsCards() {
           key={metric.title} 
           className="group bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md hover:scale-[0.98] transition-all duration-200 cursor-pointer overflow-hidden" 
           onClick={() => {
-            console.log(`${metric.title} metric clicked: ${metric.value}`);
             // Navigate to contacts with proper filtering
             if (metric.title === "Total Contacts") {
               setLocation('/contacts');

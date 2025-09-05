@@ -17,7 +17,6 @@ export default function NetworkMap() {
           <Button 
             variant="outline" 
             onClick={() => {
-              console.log("Export network clicked");
               // TODO: Implement network export
             }}
             data-testid="button-export-network"
@@ -28,7 +27,6 @@ export default function NetworkMap() {
           <Button 
             variant="outline" 
             onClick={() => {
-              console.log("Network settings clicked");
               // TODO: Implement network settings
             }}
             data-testid="button-settings"
@@ -49,7 +47,6 @@ export default function NetworkMap() {
                 variant="outline" 
                 size="sm" 
                 onClick={() => {
-                  console.log("Filter by category clicked");
                   // TODO: Implement category filtering
                 }}
                 data-testid="button-filter-category"
@@ -61,7 +58,6 @@ export default function NetworkMap() {
                 variant="outline" 
                 size="sm" 
                 onClick={() => {
-                  console.log("Filter by strength clicked");
                   // TODO: Implement strength filtering
                 }}
                 data-testid="button-filter-strength"
@@ -73,7 +69,6 @@ export default function NetworkMap() {
                 variant="outline" 
                 size="sm" 
                 onClick={() => {
-                  console.log("Filter by company clicked");
                   // TODO: Implement company filtering
                 }}
                 data-testid="button-filter-company"

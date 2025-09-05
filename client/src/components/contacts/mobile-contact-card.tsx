@@ -39,7 +39,6 @@ export default function MobileContactCard({ contact, onEdit, onDelete, onInterac
       className="hover:shadow-md transition-shadow touch-manipulation cursor-pointer" 
       data-testid={`mobile-contact-card-${contact.id}`}
       onClick={() => {
-        console.log("Mobile contact card clicked:", contact.firstName, contact.lastName);
         onView?.(contact);
       }}
     >
@@ -118,7 +117,6 @@ export default function MobileContactCard({ contact, onEdit, onDelete, onInterac
                   size="sm"
                   variant="outline"
                   onClick={() => {
-                    console.log("Logging interaction for:", contact.firstName, contact.lastName);
                     setShowInteractionModal(true);
                   }}
                   className="h-8 px-3 text-xs"
@@ -134,7 +132,6 @@ export default function MobileContactCard({ contact, onEdit, onDelete, onInterac
                   size="sm"
                   variant="ghost"
                   onClick={() => {
-                    console.log("Editing contact:", contact.firstName, contact.lastName);
                     onEdit?.(contact);
                   }}
                   className="h-8 w-8 p-0"
@@ -146,7 +143,6 @@ export default function MobileContactCard({ contact, onEdit, onDelete, onInterac
                   size="sm"
                   variant="ghost"
                   onClick={() => {
-                    console.log("Deleting contact:", contact.firstName, contact.lastName);
                     onDelete?.(contact);
                   }}
                   className="h-8 w-8 p-0 text-red-600 hover:text-red-700 hover:bg-red-50"
