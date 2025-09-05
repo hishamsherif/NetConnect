@@ -169,7 +169,7 @@ export class DatabaseStorage implements IStorage {
     const result = await db
       .delete(contacts)
       .where(and(eq(contacts.id, id), eq(contacts.userId, userId)));
-    return result.rowCount > 0;
+    return (result.rowCount ?? 0) > 0;
   }
 
   async searchContacts(userId: string, query: string): Promise<ContactWithRelations[]> {
@@ -195,7 +195,13 @@ export class DatabaseStorage implements IStorage {
 
   // Interaction operations
   async getInteractions(userId: string, contactId?: string, limit = 50): Promise<InteractionWithContact[]> {
-    let query = db
+    const whereConditions = [eq(interactions.userId, userId)];
+    
+    if (contactId) {
+      whereConditions.push(eq(interactions.contactId, contactId));
+    }
+
+    const result = await db
       .select({
         id: interactions.id,
         userId: interactions.userId,
@@ -210,13 +216,7 @@ export class DatabaseStorage implements IStorage {
       })
       .from(interactions)
       .innerJoin(contacts, eq(interactions.contactId, contacts.id))
-      .where(eq(interactions.userId, userId));
-
-    if (contactId) {
-      query = query.where(eq(interactions.contactId, contactId));
-    }
-
-    const result = await query
+      .where(and(...whereConditions))
       .orderBy(desc(interactions.createdAt))
       .limit(limit);
 
@@ -248,7 +248,7 @@ export class DatabaseStorage implements IStorage {
     const result = await db
       .delete(interactions)
       .where(and(eq(interactions.id, id), eq(interactions.userId, userId)));
-    return result.rowCount > 0;
+    return (result.rowCount ?? 0) > 0;
   }
 
   // Relationship operations
@@ -268,7 +268,7 @@ export class DatabaseStorage implements IStorage {
     const result = await db
       .delete(relationships)
       .where(and(eq(relationships.id, id), eq(relationships.userId, userId)));
-    return result.rowCount > 0;
+    return (result.rowCount ?? 0) > 0;
   }
 
   // Tag operations
@@ -288,7 +288,7 @@ export class DatabaseStorage implements IStorage {
     const result = await db
       .delete(tags)
       .where(and(eq(tags.id, id), eq(tags.userId, userId)));
-    return result.rowCount > 0;
+    return (result.rowCount ?? 0) > 0;
   }
 
   // Analytics
