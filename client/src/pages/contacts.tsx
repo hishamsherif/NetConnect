@@ -13,7 +13,6 @@ export default function Contacts() {
   const [selectedContact, setSelectedContact] = useState<ContactWithRelations | null>(null);
 
   const handleContactSelect = (contact: ContactWithRelations) => {
-    console.log("Contact selected in contacts page:", contact.firstName, contact.lastName);
     setSelectedContact(contact);
   };
 
@@ -53,7 +52,6 @@ export default function Contacts() {
             size="sm" 
             className="flex-1 sm:flex-initial" 
             onClick={() => {
-              console.log("Export button clicked");
               // TODO: Implement export functionality
             }}
             data-testid="button-export-contacts"
@@ -162,7 +160,6 @@ export default function Contacts() {
                 <Button
                   variant="outline"
                   onClick={() => {
-                    console.log("Edit contact:", selectedContact.firstName, selectedContact.lastName);
                     // TODO: Implement edit functionality
                   }}
                   className="border-gray-300 hover:bg-gray-50"
@@ -171,7 +168,6 @@ export default function Contacts() {
                 </Button>
                 <Button
                   onClick={() => {
-                    console.log("Add interaction for:", selectedContact.firstName, selectedContact.lastName);
                     // TODO: Implement add interaction functionality
                   }}
                   className="bg-blue-500 hover:bg-blue-600"

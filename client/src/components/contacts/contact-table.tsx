@@ -215,7 +215,7 @@ export default function ContactTable({ onContactSelect, initialFilter }: Contact
               key={contact.id}
               contact={contact}
               onEdit={(contact) => onContactSelect?.(contact)}
-              onDelete={(contact) => console.log('Delete', contact.id)}
+              onDelete={(contact) => {}}
               onInteract={(contact) => {
                 setSelectedContact(contact);
                 setShowInteractionModal(true);
@@ -276,7 +276,6 @@ export default function ContactTable({ onContactSelect, initialFilter }: Contact
                       <div 
                         className="cursor-pointer hover:text-blue-600 transition-colors duration-200"
                         onClick={() => {
-                          console.log("Contact selected:", contact.firstName, contact.lastName);
                           setLocation(`/contacts/${contact.id}`);
                         }}
                       >
@@ -326,7 +325,6 @@ export default function ContactTable({ onContactSelect, initialFilter }: Contact
                         variant="ghost"
                         size="sm"
                         onClick={() => {
-                          console.log("View contact:", contact.firstName, contact.lastName);
                           setLocation(`/contacts/${contact.id}`);
                         }}
                         className="h-10 w-10 p-0 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors"
@@ -338,7 +336,6 @@ export default function ContactTable({ onContactSelect, initialFilter }: Contact
                         variant="ghost"
                         size="sm"
                         onClick={() => {
-                          console.log("Edit contact:", contact.firstName, contact.lastName);
                           onContactSelect?.(contact);
                         }}
                         className="h-10 w-10 p-0 hover:bg-green-50 hover:text-green-600 rounded-lg transition-colors"
@@ -350,7 +347,6 @@ export default function ContactTable({ onContactSelect, initialFilter }: Contact
                         variant="ghost"
                         size="sm"
                         onClick={() => {
-                          console.log("Add interaction for:", contact.firstName, contact.lastName);
                           setSelectedContact(contact);
                           setShowInteractionModal(true);
                         }}

@@ -65,14 +65,12 @@ export default function ContactProfile() {
   }, [contact]);
 
   const handleSaveEdit = () => {
-    console.log("Saving contact edits:", editForm);
     // TODO: Implement actual save functionality
     alert("Contact updated successfully! (Save functionality coming soon)");
     setIsEditing(false);
   };
 
   const handleSaveNotes = () => {
-    console.log("Saving notes:", editForm.notes);
     // TODO: Implement actual save functionality
     alert("Notes updated successfully! (Save functionality coming soon)");
     setIsEditingNotes(false);
@@ -486,7 +484,6 @@ export default function ContactProfile() {
                       size="sm"
                       variant="outline"
                       onClick={() => {
-                        console.log("Manage relationships clicked");
                         alert("Relationship management functionality coming soon!");
                       }}
                       data-testid="button-manage-relationships"

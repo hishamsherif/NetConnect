@@ -15,13 +15,11 @@ export default function Layout({ children }: LayoutProps) {
   const [, setLocation] = useLocation();
 
   const handleAddContact = () => {
-    console.log("Add Contact clicked from layout");
     setLocation('/contacts');
     // TODO: Open add contact modal
   };
 
   const handleImportCSV = () => {
-    console.log("Import CSV clicked from layout");
     // TODO: Implement CSV import functionality
   };
 

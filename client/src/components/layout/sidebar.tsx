@@ -103,7 +103,6 @@ export default function Sidebar({ onAddContact, onImportCSV }: SidebarProps) {
             <button
               key={item.name}
               onClick={() => {
-                console.log(`Navigating to ${item.name}: ${item.href}`);
                 setLocation(item.href);
               }}
               className={`w-full group flex items-center justify-between px-4 py-3 text-left rounded-xl transition-all duration-200 ${
@@ -152,7 +151,6 @@ export default function Sidebar({ onAddContact, onImportCSV }: SidebarProps) {
         
         <Button
           onClick={() => {
-            console.log("Add Contact button clicked");
             onAddContact?.();
           }}
           className="w-full bg-blue-500 text-white hover:bg-blue-600 focus:bg-blue-600 active:bg-blue-700 px-4 py-3 rounded-xl font-medium transition-all duration-200 hover:scale-[0.98] focus:scale-[0.98] active:scale-[0.96] flex items-center justify-center space-x-2"
@@ -163,7 +161,6 @@ export default function Sidebar({ onAddContact, onImportCSV }: SidebarProps) {
         
         <Button
           onClick={() => {
-            console.log("Import CSV button clicked");
             onImportCSV?.();
           }}
           variant="outline"

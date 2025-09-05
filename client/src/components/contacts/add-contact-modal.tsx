@@ -45,19 +45,15 @@ export default function AddContactModal({ open, onOpenChange }: AddContactModalP
   });
 
   const onSubmit = (data: FormData) => {
-    console.log("Form submission data:", data);
-    
     createContact.mutate({
       ...data,
       userId: "user-1", // Use default user ID
     }, {
       onSuccess: () => {
-        console.log("Contact created successfully");
         form.reset();
         onOpenChange(false);
       },
       onError: (error) => {
-        console.error("Contact creation failed:", error);
       },
     });
   };
